@@ -38,6 +38,15 @@
                     </label>
                 </li>
             </ul>
+
+            <hr>
+
+            <div id="import">
+                <form action="" @submit.prevent="importData(importedData)">
+                    <input type="textarea" v-model="importedData" placeholder="exportしたデータを貼り付けてください" required>
+                    <input type="submit" value="登録" class="btn btn-primary">
+                </form>
+            </div>
         </div>
     </div>
 

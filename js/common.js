@@ -7,7 +7,8 @@ const vm = new Vue({
     newBalance: '',
     totalBill: 0.0,
     newDate: '',
-    myDate: new Date()
+    myDate: new Date(),
+    importedData: ''
   },
   mounted: function(){
     this.loadTodo();
@@ -18,6 +19,14 @@ const vm = new Vue({
     this.checkVersion();
   },
   methods: {
+    importData: function(importedData){
+        this.importedData = importedData.split('\n');
+        for(var i = 0; i < this.importedData.length; i++){
+            alert(this.importedData[i]);
+        }
+        // this.addTodo(this.importedData[0], this.importedData[1], this.importedData[2]);
+        this.importedData = '';
+    },
     checkVersion: function(){
         this.old_version = JSON.parse(localStorage.getItem('version'));
         if(!this.old_version){
