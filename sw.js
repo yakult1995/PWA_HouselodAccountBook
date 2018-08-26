@@ -1,7 +1,7 @@
 // ServiceWorker処理：https://developers.google.com/web/fundamentals/primers/service-workers/?hl=ja
 
 // キャッシュ名とキャッシュファイルの指定
-var CACHE_NAME = 'pwa-sample-caches';
+var CACHE_STATIC_VERSION = 'v0.1';
 var urlsToCache = [
     '/pwa/',
     '/pwa/css/style.css',
@@ -13,11 +13,26 @@ var urlsToCache = [
 self.addEventListener('install', function(event) {
     event.waitUntil(
         caches
-            .open(CACHE_NAME)
+            .open(CACHE_STATIC_VERSION)
             .then(function(cache) {
                 return cache.addAll(urlsToCache);
             })
     );
+});
+
+// リソース更新処理
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys()
+      .then(function(keyList) {
+        return Promise.all(keyList.map(function(key) {
+          if (key !== CACHE_STATIC_VERSION) {
+            return caches.delete(key);
+          }
+        }));
+      })
+  );
+  return self.clients.claim();
 });
 
 // リソースフェッチ時のキャッシュロード処理
