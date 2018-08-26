@@ -1,0 +1,3 @@
+function resist(){
+    alert('done!');
+}
