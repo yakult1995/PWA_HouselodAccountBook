@@ -1,7 +1,7 @@
 // ServiceWorker処理：https://developers.google.com/web/fundamentals/primers/service-workers/?hl=ja
 
 // キャッシュ名とキャッシュファイルの指定
-var CACHE_STATIC_VERSION = 'v.α-0.4.0';
+var CACHE_STATIC_VERSION = 'v.α-0.4.1';
 var urlsToCache = [
     '/pwa/',
     '/pwa/css/style.css',
@@ -36,7 +36,6 @@ self.addEventListener('activate', function(event) {
 
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener('fetch', function(event) {
-    self.registration.update();
     event.respondWith(
         caches
             .match(event.request)
