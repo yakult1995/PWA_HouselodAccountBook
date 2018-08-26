@@ -16,3 +16,11 @@ div#header{
 span#current_version{
     font-size: 0.9em;
 }
+
+li{
+    list-style: none;
+}
+
+label.done{
+    text-decoration: line-through;
+}
