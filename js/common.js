@@ -22,9 +22,9 @@ const vm = new Vue({
     importData: function(importedData){
         this.importedData = importedData.split('\n');
         for(var i = 0; i < this.importedData.length; i++){
-            alert(this.importedData[i]);
+            var temp_data = this.importedData[i].split(',');
+            this.addTodo(temp_data[0], temp_data[1], temp_data[2]);
         }
-        // this.addTodo(this.importedData[0], this.importedData[1], this.importedData[2]);
         this.importedData = '';
     },
     checkVersion: function(){
