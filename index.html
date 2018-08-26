@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="manifest.json">
-    <title>PWA Sample</title>
+    <title>家計簿</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -17,11 +17,12 @@
         <div id="form">
             <form action="" method="get">
                 <input type="text">
-                <input type="submit" value="登録">
+                <input type="submit" value="登録" onclick="resist();">
             </form>
         </div>
     </div>
 
+    <script src="js/resist.js"></script>
     <script>
         // ServiceWorker登録：https://developers.google.com/web/fundamentals/primers/service-workers/?hl=ja
         if ('serviceWorker' in navigator) {
