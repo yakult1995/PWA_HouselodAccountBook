@@ -1,22 +1,25 @@
-function checkVersion(){
-    var current_version = $('#current_version').text().replace('.', '-').split('-')[1];
-    alert(current_version);
-}
-
 const vm = new Vue({
   el: '#book',
   data: {
     items: [],
     newName: '',
     newBalance: '',
+    totalBill: 0.0,
     newDate: '',
     myDate: new Date()
   },
   mounted: function(){
     this.loadTodo();
+    this.calTotal();
     this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
   },
   methods: {
+    calTotal: function(){
+        this.totalBill = 0.0;
+        for(var i = 0; i < this.items.length; i++){
+            this.totalBill += parseFloat(this.items[i].balance);
+        }
+    },
     addTodo: function(newName, newBalance, newDate){
         this.items.push({
             name: newName,
@@ -45,6 +48,8 @@ const vm = new Vue({
         });
 
         localStorage.setItem('items', JSON.stringify(this.items));
+
+        this.calTotal();
     },
     loadTodo: function(){
         this.items = JSON.parse( localStorage.getItem('items') );

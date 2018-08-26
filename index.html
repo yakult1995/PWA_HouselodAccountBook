@@ -11,7 +11,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v0.1</span>
+        家計簿 <span id="current_version">v.α-0.2</span>
     </div>
 
     <hr>
@@ -25,6 +25,11 @@
                 <input type="date" v-model="newDate" required>
                 <input type="submit" value="登録" class="btn btn-primary">
             </form>
+
+            <hr>
+
+            <div id="total_bill">${{ totalBill }}</div>
+
             <ul>
                 <li v-for="item in items">
                     <label>
