@@ -17,20 +17,17 @@
     <hr>
 
     <div id="content">
-        <div id="form">
-            <form action="" method="get">
-                <input type="text" name="item" placeholder="アイテム" required>
-                <input type="text" name="balance" placeholder="金額" required>
+
+        <div id="book">
+            <form action="" @submit.prevent="addTodo(newName, newBalance)">
+                <input type="text" placeholder="アイテム" v-model="newName" required>
+                <input type="number" placeholder="金額" step="0.01" v-model="newBalance" required>
                 <input type="submit" value="登録" class="btn btn-primary">
             </form>
-        </div>
-
-        <div id="todo">
-            <input type="text" placeholder="TODOを入力しましょう！" v-model="newItemTitle" v-on:keyup.enter="addTodo(newItemTitle)" v-on:keypress="checkJapanese()">
             <ul>
                 <li v-for="item in items">
-                    <label v-bind:class="{ done: item.isChecked }">
-                        <input type="checkbox" v-model="item.isChecked"> {{ item.title }} <button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">削除</button>
+                    <label>
+                        {{ item.name }} <button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">削除</button>
                     </label>
                 </li>
             </ul>
