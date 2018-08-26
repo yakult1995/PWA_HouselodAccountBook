@@ -1,7 +1,14 @@
-* {
+@import url(http://fonts.googleapis.com/css?family=Quicksand);
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+
+body, html{
     width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
+    font-family: 'Quicksand', 'Noto Sans Japanese', serif;
+    text-align: center;
+    margin: auto;
+}
+
+div#header{
+    font-size: 1.2em;
+    margin: 10px auto;
 }
