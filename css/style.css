@@ -24,3 +24,7 @@ span#current_version{
 li{
     list-style: none;
 }
+
+div#total_bill{
+    font-size: 1.1em;
+}
