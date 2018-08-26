@@ -4,34 +4,28 @@ function checkVersion(){
 }
 
 const vm = new Vue({
-  el: '#todo',
+  el: '#book',
   data: {
-    items: [
-    ],
-    newItemTitle: '',
-    canTnter: false
+    items: [],
+    newName: '',
+    newBalance: ''
   },
   mounted: function(){
     this.loadTodo();
   },
   methods: {
-    checkJapanese: function(){
-        this.canTnter = true;
-    },
-    addTodo: function(newTitle){
-        if(!this.canTnter)return;
+    addTodo: function(newName, newBalance){
         this.items.push({
-            title: newTitle,
-            isChecked: false
+            name: newName,
+            balance: newBalance
         });
-        this.newItemTitle = '';
         this.canTnter = false;
         this.saveTodo();
     },
     deleteTodo: function(ele){
-        if(confirm(ele.title + 'を削除しますか？')){
+        if(confirm(ele.name + 'を削除しますか？')){
             this.items = this.items.filter(function(item){
-                return item.title != ele.title;
+                return item.name != ele.name;
             })
             this.saveTodo();
         }
