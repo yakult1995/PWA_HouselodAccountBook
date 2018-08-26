@@ -5,7 +5,6 @@ var CACHE_STATIC_VERSION = 'v.α-0.2';
 var urlsToCache = [
     '/pwa/',
     '/pwa/css/style.css',
-    '/pwa/js/resist.js',
     '/pwa/js/common.js'
 ];
 
@@ -27,6 +26,7 @@ self.addEventListener('activate', function(event) {
       .then(function(keyList) {
         return Promise.all(keyList.map(function(key) {
           if (key !== CACHE_STATIC_VERSION) {
+            alert('version up!');
             return caches.delete(key);
           }
         }));
