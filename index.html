@@ -26,7 +26,7 @@
         </div>
 
         <div id="todo">
-            <input type="text" placeholder="TODOを入力しましょう！" v-model="newItemTitle" v-on:keyup.enter="addTodo(newItemTitle)">
+            <input type="text" placeholder="TODOを入力しましょう！" v-model="newItemTitle" v-on:keyup.enter="addTodo(newItemTitle)" v-on:keypress="checkJapanese()">
             <ul>
                 <li v-for="item in items">
                     <label v-bind:class="{ done: item.isChecked }">

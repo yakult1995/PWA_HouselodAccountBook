@@ -14,28 +14,34 @@ const vm = new Vue({
         { title: '参加費のお釣りを準備する', isChecked: false },
         { title: '会場設営をする', isChecked: false },
     ],
-    newItemTitle: ''
+    newItemTitle: '',
+    canTnter: false
   },
   mounted: function(){
     this.loadTodo();
   },
   methods: {
+    checkJapanese: function(){
+        this.canTnter = true;
+    },
     addTodo: function(newTitle){
-      this.items.push({
-        title: newTitle,
-        isChecked: false
-      });
-      this.newItemTitle = '';
-      this.saveTodo();
+        if(!this.canTnter)return;
+        this.items.push({
+            title: newTitle,
+            isChecked: false
+        });
+        this.newItemTitle = '';
+        this.canTnter = false;
+        this.saveTodo();
     },
     saveTodo: function(){
-      localStorage.setItem('items', JSON.stringify(this.items));
+        localStorage.setItem('items', JSON.stringify(this.items));
     },
     loadTodo: function(){
-      this.items = JSON.parse( localStorage.getItem('items') );
-      if( !this.items ){
-        this.items = [];
-      }
+        this.items = JSON.parse( localStorage.getItem('items') );
+            if( !this.items ){
+            this.items = [];
+            }
+        }
     }
-  }
 })
