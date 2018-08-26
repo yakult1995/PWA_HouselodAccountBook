@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.α-0.3.2</span>
+        家計簿 <span id="current_version">v.α-0.4.0</span>
     </div>
 
     <hr>
@@ -29,7 +29,7 @@
 
             <hr>
 
-            <div id="total_bill">合計金額 : ${{ totalBill }}</div>
+            <div id="total_bill">合計金額 : ${{ Math.round(totalBill * 100) / 100 }}</div>
 
             <ul>
                 <li v-for="item in items">
@@ -42,9 +42,10 @@
             <hr>
 
             <div id="import">
+                データインポート  
                 <form action="" @submit.prevent="importData(importedData)">
                     <textarea v-model="importedData" :rows="10" placeholder="exportしたデータを貼り付けてください" required></textarea>
-                    <input type="submit" value="登録" class="btn btn-primary">
+                    <input type="submit" value="読み込み" class="btn btn-primary">
                 </form>
             </div>
         </div>
