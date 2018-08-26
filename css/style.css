@@ -8,6 +8,10 @@ body, html{
     margin: auto;
 }
 
+input{
+    margin: 5px;
+}
+
 div#header{
     font-size: 1.2em;
     margin: 10px auto;
