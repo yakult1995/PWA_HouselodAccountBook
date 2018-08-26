@@ -19,7 +19,8 @@ const vm = new Vue({
             name: newName,
             balance: newBalance
         });
-        this.canTnter = false;
+        this.newName = '';
+        this.newBalance = '';
         this.saveTodo();
     },
     deleteTodo: function(ele){
