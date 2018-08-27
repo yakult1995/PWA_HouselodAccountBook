@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.α-0.4.1</span>
+        家計簿 <span id="current_version">v.2.0.0</span>
     </div>
 
     <hr>
@@ -31,13 +31,14 @@
 
             <div id="total_bill">合計金額 : ${{ Math.round(totalBill * 100) / 100 }}</div>
 
-            <ul>
-                <li v-for="item in items">
-                    <label>
-                        {{ item.date.split('T')[0] }} : {{ item.name }} - ${{ item.balance }} <button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">削除</button>
-                    </label>
-                </li>
-            </ul>
+            <table class="table table-borderless">
+                <tr v-for="item in items">
+                    <td class="item_date">{{ item.date.split('T')[0].replace('-', '/').split('/')[1] }}</td>
+                    <td class="item_name">{{ item.name }}</td>
+                    <td class="item_balance">${{ item.balance }}</td>
+                    <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">削除</button></td>
+                </tr>
+            </table>
 
             <hr>
 
