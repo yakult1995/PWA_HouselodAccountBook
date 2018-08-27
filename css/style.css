@@ -12,6 +12,30 @@ input{
     margin: 5px;
 }
 
+table{
+    width: 100%;
+    margin: auto;
+}
+
+table tr{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.item_date{
+    flex-basis: 50%;
+}
+
+.item_name{
+    flex-grow: 3;
+    flex-basis: 100%;
+}
+
+.item_balance{
+    flex-basis: 50%;
+}
+
 textarea{
     width: 90%;
 }
@@ -23,10 +47,6 @@ div#header{
 
 span#current_version{
     font-size: 0.9em;
-}
-
-li{
-    list-style: none;
 }
 
 div#total_bill{
