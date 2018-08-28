@@ -9,7 +9,8 @@ const vm = new Vue({
     newDate: '',
     myDate: new Date(),
     importedData: '',
-    disp_day: ''
+    disp_day: '',
+    day_bill: 0.0
   },
   mounted: function(){
     this.loadTodo();
@@ -23,8 +24,18 @@ const vm = new Vue({
     setDsipDay:function(date){
         if(this.disp_day == ''){
             this.disp_day = date;
+            this.day_bill = 0.0;
+            
+            var day_item = this.items.filter(function(item){
+                return item['date'].split('T')[0].replace('-', '/').split('/')[1] == date;
+            })
+            console.log(day_item);
+            for(var i = 0; i < day_item.length; i++){
+                this.day_bill += parseFloat(day_item[i].balance);
+            }
         }else{
             this.disp_day = '';
+            this.day_bill = this.totalBill;
         }
     },
     isDispDay: function(date){
@@ -61,6 +72,7 @@ const vm = new Vue({
         for(var i = 0; i < this.items.length; i++){
             this.totalBill += parseFloat(this.items[i].balance);
         }
+        this.day_bill = this.totalBill;
     },
     addTodo: function(newName, newBalance, newDate){
         this.items.push({
