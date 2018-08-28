@@ -59,7 +59,35 @@ textarea{
 
 div#header{
     font-size: 1.2em;
-    margin: 10px auto;
+    height: 50px;
+    top: 0px;
+}
+
+div#content-header{
+    top: 50px;
+    height: 100px;
+}
+
+div.fixed-item{
+    position: fixed;
+    background-color: white;
+    width: 100%;
+}
+
+nav{
+    background-color: white;
+}
+
+div.tabContent{
+    position: relative;
+    top: 200px;
+    z-index: -1;
+}
+
+div#import{
+    position: relative;
+    top: 200px;
+    z-index: -1;
 }
 
 span#current_version{
