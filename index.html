@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="images/icon.jpg">
+    <title>家計簿</title>
+    <link rel="stylesheet" href="css/bootstrap4.1.3.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="header">
+        家計簿 <span id="current_version">v.2.1.2</span>
+    </div>
+
+    <hr>
+
+    <div id="content">
+
+        <div id="book">
+            <form action="" @submit.prevent="addTodo(newName, newBalance, newDate)">
+                <input type="text" placeholder="アイテム" v-model="newName" required>
+                <input type="number" placeholder="金額" step="0.01" v-model="newBalance" required>
+                <input type="date" v-model="newDate" required>
+                <input type="submit" value="登録" class="btn btn-primary">
+            </form>
+
+            <hr>
+
+            <div id="total_bill">合計金額 : ${{ Math.round(totalBill * 100) / 100 }}</div>
+
+            <table class="table table-borderless">
+                <tr v-for="item in items" v-if="isDispDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">
+                    <td class="item_date" @click="setDsipDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">{{ item.date.split('T')[0].replace('-', '/').split('/')[1] }}</td>
+                    <td class="item_name">{{ item.name }}</td>
+                    <td class="item_balance">${{ item.balance }}</td>
+                    <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">削除</button></td>
+                </tr>
+            </table>
+
+            <hr>
+
+            <div id="import">
+                データインポート  
+                <form action="" @submit.prevent="importData(importedData)">
+                    <textarea v-model="importedData" :rows="10" placeholder="exportしたデータを貼り付けてください" required></textarea>
+                    <input type="submit" value="読み込み" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.1.14.3.min.js"></script>
+    <script src="js/bootstrap4.1.3.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        // ServiceWorker登録：https://developers.google.com/web/fundamentals/primers/service-workers/?hl=ja
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
