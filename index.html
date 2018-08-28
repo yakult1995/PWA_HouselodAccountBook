@@ -33,23 +33,27 @@
             </nav>
 
             <div class="tabContent">
-                <div v-if="isActiveTab('1')">
-                    <div id="total_bill">合計金額 : ${{ Math.round(totalBill * 100) / 100 }}</div>
-                    <div id="day_bill">表示金額 : ${{ Math.round(day_bill * 100) / 100 }}</div>
+                <transition>
+                    <div v-if="isActiveTab('1')" class="tabs">
+                        <div id="total_bill">合計金額 : ${{ Math.round(totalBill * 100) / 100 }}</div>
+                        <div id="day_bill">表示金額 : ${{ Math.round(day_bill * 100) / 100 }}</div>
 
-                    <table class="table table-borderless">
-                        <tr v-for="item in items" v-if="isDispDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">
-                            <td class="item_date" @click="setDsipDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">{{ item.date.split('T')[0].replace('-', '/').split('/')[1] }}</td>
-                            <td class="item_name">{{ item.name }}</td>
-                            <td class="item_balance">${{ item.balance }}</td>
-                            <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">✗</button></td>
-                        </tr>
-                    </table>
-                </div>
+                        <table class="table table-borderless">
+                            <tr v-for="item in items" v-if="isDispDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">
+                                <td class="item_date" @click="setDsipDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">{{ item.date.split('T')[0].replace('-', '/').split('/')[1] }}</td>
+                                <td class="item_name">{{ item.name }}</td>
+                                <td class="item_balance">${{ item.balance }}</td>
+                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">✗</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </transition>
 
-                <div v-else-if="isActiveTab('2')">
-                    fuck
-                </div>
+                <transition>
+                    <div v-if="isActiveTab('2')" class="tabs">
+                        xxx
+                    </div>
+                </transition>
             </div>
 
             <hr>

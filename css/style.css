@@ -69,3 +69,21 @@ span#current_version{
 div#total_bill{
     font-size: 1.1em;
 }
+
+.v-enter-active {
+    transition: all .8s ease;
+}
+
+.v-leave-active {
+    /*transition: all .5s ease;*/
+}
+
+.v-enter{
+    transform: translate(100%, 0);
+    opacity: 0;
+}
+
+.v-leave-to{
+    /*transform: translate(-100%, 0);*/
+    opacity: 0;
+}
