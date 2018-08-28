@@ -10,7 +10,8 @@ const vm = new Vue({
     myDate: new Date(),
     importedData: '',
     disp_day: '',
-    day_bill: 0.0
+    day_bill: 0.0,
+    isActiveTabNum: '1'
   },
   mounted: function(){
     this.loadTodo();
@@ -21,6 +22,16 @@ const vm = new Vue({
     this.checkVersion();
   },
   methods: {
+    isSelectTab: function(tab_num){
+        this.isActiveTabNum = tab_num;
+    },
+    isActiveTab: function(tab_num){
+        if(tab_num == this.isActiveTabNum){
+            return true;
+        }else{
+            return false;
+        }
+    },
     setDsipDay:function(date){
         if(this.disp_day == ''){
             this.disp_day = date;
