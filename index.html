@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.1.4</span>
+        家計簿 <span id="current_version">v.2.1.5</span>
     </div>
 
     <hr>
@@ -37,7 +37,7 @@
                     <td class="item_date" @click="setDsipDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">{{ item.date.split('T')[0].replace('-', '/').split('/')[1] }}</td>
                     <td class="item_name">{{ item.name }}</td>
                     <td class="item_balance">${{ item.balance }}</td>
-                    <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">削除</button></td>
+                    <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">✗</button></td>
                 </tr>
             </table>
 
