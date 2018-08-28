@@ -1,4 +1,4 @@
-var CACHE_STATIC_VERSION = 'v.2.1.2';
+var CACHE_STATIC_VERSION = 'v.2.1.4';
 var urlsToCache = [
     'sw.js',
     'manifest.json',
@@ -9,7 +9,9 @@ var urlsToCache = [
     'js/jquery-3.3.1.min.js',
     'js/popper.1.14.3.min.js',
     'js/vue.min.js',
-    'js/bootstrap4.1.3.min.js'
+    'js/bootstrap4.1.3.min.js',
+    'https://fonts.googleapis.com/css?family=Quicksand',
+    'https://fonts.googleapis.com/earlyaccess/notosansjapanese.css'
 ];
 
 self.addEventListener('install', function(event) {
