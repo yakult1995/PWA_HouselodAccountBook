@@ -61,6 +61,7 @@ div#header{
     font-size: 1.2em;
     height: 50px;
     top: 0px;
+    padding: 10px;
 }
 
 div#content-header{
