@@ -37,6 +37,10 @@ table tr{
     flex-basis: 50%;
 }
 
+.item_balance{
+    flex-basis: 60%;
+}
+
 textarea{
     width: 90%;
 }
