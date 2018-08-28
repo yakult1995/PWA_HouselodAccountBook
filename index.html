@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.1.5</span>
+        家計簿 <span id="current_version">v.2.1.6</span>
     </div>
 
     <hr>
@@ -27,7 +27,10 @@
                 <input type="submit" value="登録" class="btn btn-primary">
             </form>
 
-            <hr>
+            <nav>
+                <li class="btn btn-outline-info">全件表示</li>
+                <li class="btn btn-outline-info">月別表示</li>
+            </nav>
 
             <div id="total_bill">合計金額 : ${{ Math.round(totalBill * 100) / 100 }}</div>
             <div id="day_bill">表示金額 : ${{ Math.round(day_bill * 100) / 100 }}</div>

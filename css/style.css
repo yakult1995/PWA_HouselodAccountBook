@@ -12,6 +12,18 @@ input{
     margin: 5px;
 }
 
+nav{
+    margin: 10px auto;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 10px;
+}
+
+li{
+    text-decoration: none;
+    display: inline-block;
+}
+
 table{
     width: 100%;
     margin: auto;
