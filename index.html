@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div id="header" class="fixed-item">
+    <div id="header">
         家計簿 <span id="current_version">v.2.1.6</span>
     </div>
 
@@ -20,7 +20,7 @@
     <div id="content">
 
         <div id="book">
-            <div id="content-header" class="fixed-item">
+            <div id="content-header">
                 <form action="" @submit.prevent="addTodo(newName, newBalance, newDate)">
                     <input type="text" placeholder="アイテム" v-model="newName" required>
                     <input type="number" placeholder="金額" step="0.01" v-model="newBalance" required>
