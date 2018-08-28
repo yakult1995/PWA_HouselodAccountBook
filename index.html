@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.1.6</span>
+        家計簿 <span id="current_version">v.2.1.6b</span>
     </div>
 
     <hr>
@@ -46,6 +46,16 @@
                                 <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">✗</button></td>
                             </tr>
                         </table>
+
+                        <hr>
+
+                        <div id="import">
+                            データインポート  
+                            <form action="" @submit.prevent="importData(importedData)">
+                                <textarea v-model="importedData" :rows="10" placeholder="exportしたデータを貼り付けてください" required></textarea>
+                                <input type="submit" value="読み込み" class="btn btn-primary">
+                            </form>
+                        </div>
                     </div>
                 </transition>
 
@@ -54,16 +64,6 @@
                         xxx
                     </div>
                 </transition>
-            </div>
-
-            <hr>
-
-            <div id="import">
-                データインポート  
-                <form action="" @submit.prevent="importData(importedData)">
-                    <textarea v-model="importedData" :rows="10" placeholder="exportしたデータを貼り付けてください" required></textarea>
-                    <input type="submit" value="読み込み" class="btn btn-primary">
-                </form>
             </div>
         </div>
     </div>
