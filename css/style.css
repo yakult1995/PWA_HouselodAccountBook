@@ -13,10 +13,11 @@ input{
 }
 
 nav{
-    margin: 10px auto;
+    margin: 0px auto 10px auto;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
     padding: 10px;
+    background-color: white;
 }
 
 li{
@@ -59,36 +60,7 @@ textarea{
 
 div#header{
     font-size: 1.2em;
-    height: 50px;
-    top: 0px;
     padding: 10px;
-}
-
-div#content-header{
-    top: 50px;
-    height: 100px;
-}
-
-div.fixed-item{
-    position: fixed;
-    background-color: white;
-    width: 100%;
-}
-
-nav{
-    background-color: white;
-}
-
-div.tabContent{
-    position: relative;
-    top: 200px;
-    z-index: -1;
-}
-
-div#import{
-    position: relative;
-    top: 200px;
-    z-index: -1;
 }
 
 span#current_version{
@@ -97,6 +69,16 @@ span#current_version{
 
 div#total_bill{
     font-size: 1.1em;
+}
+
+div.tabContent{
+}
+
+.fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
 }
 
 .v-enter-active {
