@@ -26,7 +26,7 @@ const vm = new Vue({
   },
   methods: {
     setMonth: function(month){
-        alert(month);
+        this.nowMonth = month;
     },
     isActiveMonth: function(month){
         if(month == this.nowMonth){
