@@ -1,4 +1,4 @@
-var CACHE_STATIC_VERSION = 'v.2.1.9';
+var CACHE_STATIC_VERSION = 'v.2.1.9a';
 var urlsToCache = [
     'sw.js',
     'manifest.json',
@@ -56,15 +56,6 @@ function fetchAndCache(url) {
     .then(function(cache) {
         consle.log('CLONE SUCCESS');
         cache.put(url, response.clone());
-        // 更新できたら他のキャッシュ削除
-        caches.keys().then(function(cacheNames) {
-            return Promise.all(cacheNames.map(function(key) {
-                if (key !== CACHE_STATIC_VERSION) {
-                    console.log('DELETE CACHE : ' + key);
-                    return caches.delete(key);
-                }
-            }));
-        })
       return response;
     });
   })
