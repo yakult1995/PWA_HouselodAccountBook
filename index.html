@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.1.9b</span>
+        家計簿 <span id="current_version">v.2.2.0</span>
     </div>
 
     <hr>
@@ -38,7 +38,7 @@
                 <transition>
                     <div v-if="isActiveTab('1')" class="tabs">
                         <div id="total_bill">合計金額 : ${{ Math.round(totalBill * 100) / 100 }}</div>
-                        <div id="day_bill">表示金額 : ${{ Math.round(day_bill * 100) / 100 }}</div>
+                        <div id="day_bill" v-if="day_bill != 0.0">表示金額 : ${{ Math.round(day_bill * 100) / 100 }}</div>
 
                         <table class="table table-borderless">
                             <tr v-for="item in items" v-if="isDispDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">
