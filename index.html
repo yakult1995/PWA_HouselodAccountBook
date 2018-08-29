@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.1.8</span>
+        家計簿 <span id="current_version">v.2.1.9</span>
     </div>
 
     <hr>
@@ -63,7 +63,20 @@
 
                 <transition>
                     <div v-if="isActiveTab('2')" class="tabs">
-                        xxx
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div v-for="month in months" class="col-2 col-sm-2 col-md-1 month" @click="setMonth(month)" v-bind:class="{activeMonth:isActiveMonth(month)}">{{ month }}</div>
+                            </div>
+                        </div>
+
+                        <table class="table table-borderless">
+                            <tr v-for="item in items" v-if="isDispMonth(item.date.split('T')[0].replace('-', '/').split('/')[1].replace('-', '/').split('/')[0])">
+                                <td class="item_date">{{ item.date.split('T')[0].replace('-', '/').split('/')[1] }}</td>
+                                <td class="item_name">{{ item.name }}</td>
+                                <td class="item_balance">${{ item.balance }}</td>
+                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">✗</button></td>
+                            </tr>
+                        </table>
                     </div>
                 </transition>
             </div>

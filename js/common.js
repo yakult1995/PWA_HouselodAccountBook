@@ -11,9 +11,12 @@ const vm = new Vue({
     importedData: '',
     disp_day: '',
     day_bill: 0.0,
-    isActiveTabNum: '1'
+    isActiveTabNum: '1',
+    nowMonth: 'Aug',
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jly', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
   mounted: function(){
+    this.nowMonth = 'Aug';
     this.loadTodo();
     this.calTotal();
     this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
@@ -22,6 +25,16 @@ const vm = new Vue({
     this.checkVersion();
   },
   methods: {
+    setMonth: function(month){
+        this.nowMonth = month;
+    },
+    isActiveMonth: function(month){
+        if(month == this.nowMonth){
+            return true;
+        }else{
+            return false;
+        }
+    },
     isSelectTab: function(tab_num){
         this.isActiveTabNum = tab_num;
     },
@@ -47,6 +60,13 @@ const vm = new Vue({
         }else{
             this.disp_day = '';
             this.day_bill = this.totalBill;
+        }
+    },
+    isDispMonth: function(month){
+        if(this.nowMonth == this.months[parseInt(month) - 1]){
+            return true;
+        }else{
+            return false;
         }
     },
     isDispDay: function(date){
