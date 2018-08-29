@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.1.8</span>
+        家計簿 <span id="current_version">v.2.1.9</span>
     </div>
 
     <hr>
@@ -63,7 +63,11 @@
 
                 <transition>
                     <div v-if="isActiveTab('2')" class="tabs">
-                        xxx
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div v-for="month in months" class="col-2 col-sm-2 col-md-1 month" @click="setMonth(month)" v-bind:class="{activeMonth:isActiveMonth(month)}">{{ month }}</div>
+                            </div>
+                        </div>
                     </div>
                 </transition>
             </div>

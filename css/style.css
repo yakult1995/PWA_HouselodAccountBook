@@ -71,7 +71,15 @@ div#total_bill{
     font-size: 1.1em;
 }
 
-div.tabContent{
+div.month{
+    text-decoration: underline;
+    color: rgba(128, 128, 128, 0.6);
+}
+
+div.activeMonth{
+    font-weight: bold;
+    font-size: 1.1em;
+    color: rgba(255, 51, 153, 0.9);
 }
 
 .fixed {
