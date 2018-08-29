@@ -5,6 +5,7 @@ const vm = new Vue({
     items: [],
     newName: '',
     newBalance: '',
+    newHow: '',
     totalBill: 0.0,
     newDate: '',
     myDate: new Date(),
@@ -104,15 +105,17 @@ const vm = new Vue({
             this.totalBill += parseFloat(this.items[i].balance);
         }
     },
-    addTodo: function(newName, newBalance, newDate){
+    addTodo: function(newName, newBalance, newDate, newHow){
         this.items.push({
             name: newName,
             balance: newBalance,
-            date: newDate
+            date: newDate,
+            how: newHow
         });
         this.newName = '';
         this.newBalance = '';
         this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
+        this.newHow = '';
         this.saveTodo();
     },
     deleteTodo: function(ele){
