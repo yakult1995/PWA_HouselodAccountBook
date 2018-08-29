@@ -13,10 +13,11 @@ input{
 }
 
 nav{
-    margin: 10px auto;
+    margin: 0px auto 10px auto;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
     padding: 10px;
+    background-color: white;
 }
 
 li{
@@ -68,6 +69,16 @@ span#current_version{
 
 div#total_bill{
     font-size: 1.1em;
+}
+
+div.tabContent{
+}
+
+.fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
 }
 
 .v-enter-active {
