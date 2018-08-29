@@ -5,7 +5,7 @@ const vm = new Vue({
     items: [],
     newName: '',
     newBalance: '',
-    newHow: '',
+    newHow: 'card',
     totalBill: 0.0,
     newDate: '',
     myDate: new Date(),

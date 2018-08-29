@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.2.1</span>
+        家計簿 <span id="current_version">v.2.2.2</span>
     </div>
 
     <hr>
@@ -24,8 +24,8 @@
                 <form action="" @submit.prevent="addTodo(newName, newBalance, newDate, newHow)">
                     <input type="text" placeholder="アイテム" v-model="newName" required><br>
                     <input type="number" placeholder="金額" step="0.01" v-model="newBalance" required><br>
-                    <input type="radio" name="how" v-model="newHow" value="cash" required>Cash
-                    <input type="radio" name="how" v-model="newHow" value="card" required>Cash<br>
+                    <input type="radio" name="how" v-model="newHow" value="card" required>Card
+                    <input type="radio" name="how" v-model="newHow" value="cash" required>Cash<br>
                     <input type="date" v-model="newDate" required><br>
                     <input type="submit" value="登録" class="btn btn-primary">
                 </form>
