@@ -1,4 +1,4 @@
-var CACHE_STATIC_VERSION = 'v.2.1.7';
+var CACHE_STATIC_VERSION = 'v.2.1.8';
 var urlsToCache = [
     'sw.js',
     'manifest.json',
@@ -54,7 +54,17 @@ function fetchAndCache(url) {
     }
     return caches.open(CACHE_STATIC_VERSION)
     .then(function(cache) {
-      cache.put(url, response.clone());
+        consle.log('CLONE SUCCESS');
+        cache.put(url, response.clone());
+        // 更新できたら他のキャッシュ削除
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(cacheNames.map(function(key) {
+                if (key !== CACHE_STATIC_VERSION) {
+                    console.log('DELETE CACHE : ' + key);
+                    return caches.delete(key);
+                }
+            }));
+        })
       return response;
     });
   })
