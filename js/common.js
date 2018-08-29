@@ -59,7 +59,7 @@ const vm = new Vue({
             }
         }else{
             this.disp_day = '';
-            this.day_bill = this.totalBill;
+            this.day_bill = 0.0;
         }
     },
     isDispMonth: function(month){
@@ -103,7 +103,6 @@ const vm = new Vue({
         for(var i = 0; i < this.items.length; i++){
             this.totalBill += parseFloat(this.items[i].balance);
         }
-        this.day_bill = this.totalBill;
     },
     addTodo: function(newName, newBalance, newDate){
         this.items.push({
