@@ -1,4 +1,4 @@
-var CACHE_STATIC_VERSION = 'v.2.1.9a';
+var CACHE_STATIC_VERSION = 'v.2.1.9b';
 var urlsToCache = [
     'sw.js',
     'manifest.json',
@@ -54,7 +54,7 @@ function fetchAndCache(url) {
     }
     return caches.open(CACHE_STATIC_VERSION)
     .then(function(cache) {
-        consle.log('CLONE SUCCESS');
+        console.log('CLONE SUCCESS');
         cache.put(url, response.clone());
       return response;
     });
