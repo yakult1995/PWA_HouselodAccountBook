@@ -67,7 +67,7 @@ span#current_version{
     font-size: 0.9em;
 }
 
-div#total_bill{
+div.total_bill{
     font-size: 1.1em;
 }
 
