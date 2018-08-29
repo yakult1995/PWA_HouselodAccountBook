@@ -62,6 +62,13 @@ const vm = new Vue({
             this.day_bill = this.totalBill;
         }
     },
+    isDispMonth: function(month){
+        if(this.nowMonth == this.months[parseInt(month) - 1]){
+            return true;
+        }else{
+            return false;
+        }
+    },
     isDispDay: function(date){
         if(this.disp_day == ''){
             return true;
