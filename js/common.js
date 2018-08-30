@@ -105,6 +105,7 @@ const vm = new Vue({
         for(var i = 0; i < this.items.length; i++){
             this.totalBill += parseFloat(this.items[i].balance);
         }
+        this.totalBill = Math.round(this.totalBill * 100) / 100
     },
     addTodo: function(newName, newBalance, newDate, newHow){
         this.items.push({
