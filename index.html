@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.2.2</span>
+        家計簿 <span id="current_version">v.2.2.3</span>
     </div>
 
     <hr>
@@ -39,8 +39,8 @@
             <div class="tabContent">
                 <transition>
                     <div v-if="isActiveTab('1')" class="tabs">
-                        <div class="total_bill" v-if="day_bill == 0.0">合計金額 : ${{ Math.round(totalBill * 100) / 100 }}</div>
-                        <div class="total_bill" v-else-if="day_bill != 0.0">合計金額 : ${{ Math.round(day_bill * 100) / 100 }}</div>
+                        <div class="total_bill" v-if="day_bill == 0.0">合計金額 : ${{ totalBill }}</div>
+                        <div class="total_bill" v-else-if="day_bill != 0.0">合計金額 : ${{ day_bill }}</div>
 
                         <table class="table table-borderless">
                             <tr v-for="item in items" v-if="isDispDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">
@@ -69,6 +69,10 @@
                             <div class="row">
                                 <div v-for="month in months" class="col-2 col-sm-2 col-md-1 month" @click="setMonth(month)" v-bind:class="{activeMonth:isActiveMonth(month)}">{{ month }}</div>
                             </div>
+                        </div>
+
+                        <div id="visualization">
+                            {{ nowMonth }}の浪費度合い : {{ Math.round((monthlyBills[months.indexOf(nowMonth)] / totalBill) * 10000) / 100 }}%
                         </div>
 
                         <table class="table table-borderless">
