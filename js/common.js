@@ -102,6 +102,9 @@ const vm = new Vue({
     },
     calTotal: function(){
         this.totalBill = 0.0;
+        this.monthlyBills = this.monthlyBills.map(function(item){
+            return 0;
+        });
         for(var i = 0; i < this.items.length; i++){
             this.totalBill += parseFloat(this.items[i].balance);
             var month_num = parseInt(this.items[i].date.slice(5, 7));
