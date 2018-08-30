@@ -1,4 +1,4 @@
-var CACHE_STATIC_VERSION = 'v.2.2.2';
+var CACHE_STATIC_VERSION = 'v.2.2.3';
 var urlsToCache = [
     'sw.js',
     'manifest.json',

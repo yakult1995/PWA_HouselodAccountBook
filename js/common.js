@@ -14,6 +14,7 @@ const vm = new Vue({
     day_bill: 0.0,
     isActiveTabNum: '1',
     nowMonth: 'Aug',
+    monthlyBills: [0, 0, 0, 0, 0, 0, 0, 1000, 0, 0, 0, 0],
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jly', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
   mounted: function(){

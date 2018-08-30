@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.2.2</span>
+        家計簿 <span id="current_version">v.2.2.3</span>
     </div>
 
     <hr>
@@ -69,6 +69,10 @@
                             <div class="row">
                                 <div v-for="month in months" class="col-2 col-sm-2 col-md-1 month" @click="setMonth(month)" v-bind:class="{activeMonth:isActiveMonth(month)}">{{ month }}</div>
                             </div>
+                        </div>
+
+                        <div id="visualization">
+                            {{ monthlyBills[months.indexOf(nowMonth)] / totalBill }}
                         </div>
 
                         <table class="table table-borderless">
