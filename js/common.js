@@ -14,7 +14,7 @@ const vm = new Vue({
     day_bill: 0.0,
     isActiveTabNum: '1',
     nowMonth: 'Aug',
-    monthlyBills: [0, 0, 0, 0, 0, 0, 0, 1000, 0, 0, 0, 0],
+    monthlyBills: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jly', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
   mounted: function(){
@@ -104,8 +104,10 @@ const vm = new Vue({
         this.totalBill = 0.0;
         for(var i = 0; i < this.items.length; i++){
             this.totalBill += parseFloat(this.items[i].balance);
+            var month_num = parseInt(this.items[i].date.slice(5, 7));
+            this.monthlyBills[month_num - 1] += parseFloat(this.items[i].balance);
         }
-        this.totalBill = Math.round(this.totalBill * 100) / 100
+        this.totalBill = Math.round(this.totalBill * 100) / 100;
     },
     addTodo: function(newName, newBalance, newDate, newHow){
         this.items.push({
