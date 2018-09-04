@@ -1,15 +1,17 @@
-var CACHE_STATIC_VERSION = 'v.2.2.4';
+var CACHE_STATIC_VERSION = 'v.2.2.4α';
 var urlsToCache = [
     'sw.js',
     'manifest.json',
     'index.html',
     'css/style.css',
-    'js/common.js',
     'css/bootstrap4.1.3.min.css',
+    'js/common.js',
     'js/jquery-3.3.1.min.js',
     'js/popper.1.14.3.min.js',
     'js/vue.min.js',
     'js/bootstrap4.1.3.min.js',
+    'js/particles.min.js',
+    'assets/particles.json',
     'https://fonts.googleapis.com/css?family=Quicksand',
     'https://fonts.googleapis.com/earlyaccess/notosansjapanese.css'
 ];
