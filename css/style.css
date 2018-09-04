@@ -36,6 +36,11 @@ table tr{
     justify-content: flex-start;
 }
 
+div#particles-js{
+    position: absolute;
+    z-index: -1;
+}
+
 .item_date{
     flex-basis: 50%;
     text-decoration: underline;
