@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v.2.2.4α</span>
+        家計簿 <span id="current_version">v.2.2.5</span>
     </div>
 
     <hr>
@@ -35,7 +35,6 @@
                 <nav id="menu">
                     <li class="btn btn-outline-info" @click="isSelectTab('1')">全件表示</li>
                     <li class="btn btn-outline-info" @click="isSelectTab('2')">月別表示</li>
-                    <li class="btn btn-outline-info" @click="isSelectTab('3')">おまけ</li>
                 </nav>
             </div>
 
@@ -86,11 +85,6 @@
                                 <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">✗</button></td>
                             </tr>
                         </table>
-                    </div>
-                </transition>
-
-                <transition>
-                    <div v-if="isActiveTab('3')" class="tabs">
                     </div>
                 </transition>
             </div>
