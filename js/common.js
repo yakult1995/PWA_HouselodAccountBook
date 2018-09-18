@@ -5,6 +5,7 @@ const vm = new Vue({
     items: [],
     newName: '',
     newBalance: '',
+    newDay: '',
     newHow: 'card',
     totalBill: 0.0,
     newDate: '',
@@ -113,16 +114,19 @@ const vm = new Vue({
         this.totalBill = Math.round(this.totalBill * 100) / 100;
     },
     addTodo: function(newName, newBalance, newDate, newHow){
+        this.newDay = this.myDate.toString().split(' ')[0];
         this.items.push({
             name: newName,
             balance: newBalance,
             date: newDate,
+            day: this.newDay,
             how: newHow
         });
         this.newName = '';
         this.newBalance = '';
         this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
-        this.newHow = '';
+        this.newDay = '';
+        this.newHow = 'card';
         this.saveTodo();
     },
     deleteTodo: function(ele){
