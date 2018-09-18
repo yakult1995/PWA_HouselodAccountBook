@@ -74,7 +74,8 @@
                         </div>
 
                         <div id="visualization">
-                            {{ nowMonth }}の浪費度合い : {{ Math.round((monthlyBills[months.indexOf(nowMonth)] / totalBill) * 10000) / 100 }}%
+                            {{ nowMonth }}の浪費度合 : {{ Math.round((monthlyBills[months.indexOf(nowMonth)] / totalBill) * 10000) / 100 }}%<br>
+                            {{ nowMonth }}の浪費金額 : ${{ Math.round(monthlyBills[months.indexOf(nowMonth)] * 100) / 100 }}
                         </div>
 
                         <table class="table table-borderless">
