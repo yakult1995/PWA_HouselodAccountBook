@@ -1,5 +1,7 @@
 var CACHE_STATIC_VERSION = 'v.2.2.5';
 var urlsToCache = [
+    'https://fonts.googleapis.com/css?family=Quicksand',
+    'https://fonts.googleapis.com/earlyaccess/notosansjapanese.css',
     'sw.js',
     'manifest.json',
     'index.html',
