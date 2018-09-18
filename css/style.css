@@ -42,7 +42,7 @@ div#particles-js{
 }
 
 .item_date{
-    flex-basis: 50%;
+    flex-basis: 100%;
     text-decoration: underline;
 }
 
@@ -52,7 +52,7 @@ div#particles-js{
 }
 
 .item_balance{
-    flex-basis: 50%;
+    flex-basis: 20%;
 }
 
 .item_balance{
