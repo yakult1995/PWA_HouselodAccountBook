@@ -49,6 +49,7 @@ div#particles-js{
 .item_name{
     flex-grow: 3;
     flex-basis: 100%;
+    text-decoration: underline;
 }
 
 .item_balance{

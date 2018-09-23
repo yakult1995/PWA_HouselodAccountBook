@@ -34,9 +34,14 @@ const vm = new Vue({
             this.items = this.items.filter(function(item){
                 return item.name == item_name;
             })
+            // アイテムで絞ったときの合計金額計算
+            for(var i = 0; i < this.items.length; i++){
+                this.day_bill += parseFloat(this.items[i].balance);
+            }
             this.itemFilter = true;
         }else{
             this.loadTodo();
+            this.itemFilter = false;
         }
     },
     setMonth: function(month){
