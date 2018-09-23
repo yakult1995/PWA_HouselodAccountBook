@@ -30,6 +30,8 @@ const vm = new Vue({
   },
   methods: {
     setDispItem: function(item_name){
+        this.day_bill = 0.0;
+        
         if(!this.itemFilter){
             this.items = this.items.filter(function(item){
                 return item.name == item_name;
