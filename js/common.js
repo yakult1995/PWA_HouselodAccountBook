@@ -13,6 +13,7 @@ const vm = new Vue({
     importedData: '',
     disp_day: '',
     day_bill: 0.0,
+    itemFilter: false,
     isActiveTabNum: '1',
     nowMonth: 'Sep',
     monthlyBills: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -28,6 +29,16 @@ const vm = new Vue({
     this.checkVersion();
   },
   methods: {
+    setDispItem: function(item_name){
+        if(!this.itemFilter){
+            this.items = this.items.filter(function(item){
+                return item.name == item_name;
+            })
+            this.itemFilter = true;
+        }else{
+            this.loadTodo();
+        }
+    },
     setMonth: function(month){
         this.nowMonth = month;
     },
