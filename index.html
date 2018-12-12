@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v3.1</span>
+        家計簿 <span id="current_version">v3.2</span>
     </div>
 
     <hr>
@@ -35,7 +35,8 @@
                 <nav id="menu">
                     <li class="btn btn-outline-info" @click="isSelectTab('1')">全件表示</li>
                     <li class="btn btn-outline-info" @click="isSelectTab('2')">月別表示</li>
-                    <li class="btn btn-outline-info" @click="isSelectTab('3')">設定</li>
+                    <li class="btn btn-outline-info" @click="isSelectTab('3')">賃貸表</li>
+                    <li class="btn btn-outline-info" @click="isSelectTab('4')">設定</li>
                 </nav>
             </div>
 
@@ -92,6 +93,30 @@
 
                 <transition>
                     <div v-if="isActiveTab('3')" class="tabs">
+                        <form action="" @submit.prevent="addLentMoney(lentName, lentBalance, lentHow, lentDate)">
+                            <input type="text" placeholder="相手" v-model="lentName" required><br>
+                            <input type="number" placeholder="金額" step="0.01" v-model="lentBalance" required><br>
+                            <input type="radio" name="how" v-model="lentHow" value="give" required>貸した
+                            <input type="radio" name="how" v-model="lentHow" value="take" required>借りた<br>
+                            <input type="date" v-model="lentDate" required><br>
+                            <input type="submit" value="登録" class="btn btn-primary">
+                        </form>
+
+                        <table class="table table-borderless">
+                            <tr v-for="lent in lents">
+                                <td class="item_date">{{ lent.date }}</td>
+                                <td class="item_name">{{ lent.name }}</td>
+                                <td v-if="lent.how == 'give'">貸</td>
+                                <td v-if="lent.how == 'take'">借</td>
+                                <td class="item_balance">${{ lent.balance }}</td>
+                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteLent(lent)">✗</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </transition>
+
+                <transition>
+                    <div v-if="isActiveTab('4')" class="tabs">
                         <form action="" @submit.prevent="changeUserID(userID)">
                             <input type="text" placeholder="ユーザID" v-model="userID" required><br>
                             <input type="submit" value="登録" class="btn btn-primary">
