@@ -1,27 +1,33 @@
 const vm = new Vue({
   el: '#book',
   data: {
-    old_version: '',
-    items: [],
-    newName: '',
-    newBalance: '',
-    newDay: '',
-    newHow: 'card',
-    totalBill: 0.0,
-    newDate: '',
-    myDate: new Date(),
-    importedData: '',
-    disp_day: '',
-    day_bill: 0.0,
-    itemFilter: false,
-    isActiveTabNum: '1',
-    nowMonth: 'Dec',
-    monthlyBills: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jly', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      old_version: '',
+      items: [],
+      lents: [],
+      newName: '',
+      newBalance: '',
+      newDay: '',
+      newHow: 'card',
+      totalBill: 0.0,
+      newDate: '',
+      myDate: new Date(),
+      lentName: '',
+      lentBalance: '',
+      lentHow: '',
+      lentDate: new Date(),
+      importedData: '',
+      disp_day: '',
+      day_bill: 0.0,
+      itemFilter: false,
+      isActiveTabNum: '1',
+      nowMonth: 'Dec',
+      monthlyBills: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
   mounted: function(){
     this.nowMonth = 'Dec';
     this.loadTodo();
+    this.loadLent();
     this.calTotal();
     this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
 
@@ -147,14 +153,37 @@ const vm = new Vue({
         this.newHow = 'card';
         this.saveTodo();
     },
-    deleteTodo: function(ele){
-        if(confirm(ele.name + 'を削除しますか？')){
-            this.items = this.items.filter(function(item){
-                return item.name != ele.name;
+      addLentMoney: function(lentName, lentBalance, lentHow, lentDate){
+          this.lents.push({
+              name: lentName,
+              balance: lentBalance,
+              date: lentDate,
+              how: lentHow,
+              createdAt : new Date()
+          });
+          localStorage.setItem('lents', JSON.stringify(this.lents));
+
+          this.lentName = '';
+          this.lentBalance = '';
+          this.lentHow = '';
+          this.lentDate = '';
+      },
+      deleteTodo: function(ele){
+        if(confirm(ele.name + 'を削除しますか？')) {
+            this.items = this.items.filter(function (item) {
+                return item.name !== ele.name;
             })
             this.saveTodo();
         }
-    },
+      },
+      deleteLent: function(ele){
+          if(confirm(ele.name + 'を削除しますか？')) {
+              this.lents = this.lents.filter(function (item) {
+                  return item.createdAt !== ele.createdAt
+              });
+              this.saveLent();
+          }
+      },
     saveTodo: function(){
         // sort
         this.items.sort(function(a, b){
@@ -167,12 +196,21 @@ const vm = new Vue({
 
         this.calTotal();
     },
+      saveLent: function(){
+          localStorage.setItem('lents', JSON.stringify(this.lents));
+      },
     loadTodo: function(){
         this.items = JSON.parse( localStorage.getItem('items') );
         if(!this.items){
             this.items = [];
         }
     },
+      loadLent: function(){
+          this.lents = JSON.parse( localStorage.getItem('lents') );
+          if(!this.lents){
+              this.lents = [];
+          }
+      },
     changeUserID: function(userID){
         console.log("Requested UserID : " + userID);
         if(userID){
@@ -212,7 +250,7 @@ $(function() {
   if(!isResisteredUser()){
       console.log("UserID is empty");
       $('#itemResistButton').prop("disabled", true);
-      vm.isActiveTabNum = 3;
+      vm.isActiveTabNum = 4;
   }
 });
 
