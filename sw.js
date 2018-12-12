@@ -1,70 +1,54 @@
-var CACHE_STATIC_VERSION = 'v.2.2.9θ';
-var urlsToCache = [
-    'https://fonts.googleapis.com/css?family=Quicksand',
-    'https://fonts.googleapis.com/earlyaccess/notosansjapanese.css',
-    'sw.js',
-    'manifest.json',
-    'index.html',
-    'css/style.css',
-    'css/bootstrap4.1.3.min.css',
-    'js/common.js',
-    'js/jquery-3.3.1.min.js',
-    'js/popper.1.14.3.min.js',
-    'js/vue.min.js',
-    'js/bootstrap4.1.3.min.js',
-    'js/particles.min.js',
-    'assets/particles.json',
-    'https://fonts.googleapis.com/css?family=Quicksand',
-    'https://fonts.googleapis.com/earlyaccess/notosansjapanese.css'
-];
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.1/workbox-sw.js');
 
-self.addEventListener('install', function(event) {
-  event.waitUntil(
-    caches.open(CACHE_STATIC_VERSION)
-    .then(function(cache) {
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
-
-self.addEventListener('activate', function(event) {
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-        return Promise.all(cacheNames.map(function(key) {
-            if (key !== CACHE_STATIC_VERSION) {
-                console.log('DELETE CACHE : ' + key);
-                return caches.delete(key);
-            }
-        }));
-    })
-  );
-});
-
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-    .then(function(response) {
-      return response || fetchAndCache(event.request);
-    })
-  );
-});
-
-function fetchAndCache(url) {
-  return fetch(url)
-  .then(function(response) {
-    // Check if we received a valid response
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return caches.open(CACHE_STATIC_VERSION)
-    .then(function(cache) {
-        console.log('CLONE SUCCESS');
-        cache.put(url, response.clone());
-      return response;
-    });
-  })
-  .catch(function(error) {
-    console.log('Request failed:', error);
-    // You could return a custom offline 404 page here
-  });
+if (workbox) {
+    console.log(`Yay! Workbox is loaded 🎉`);
+} else {
+    console.log(`Boo! Workbox didn't load 😬`);
 }
+
+workbox.routing.registerRoute(
+    new RegExp('.*\.js'),
+    // workbox.strategies.networkFirst()
+    workbox.strategies.staleWhileRevalidate({
+        // Use a custom cache name
+        cacheName: 'js-cache',
+    })
+);
+
+workbox.routing.registerRoute(
+    // Cache CSS files
+    /.*\.css/,
+    // Use cache but update in the background ASAP
+    workbox.strategies.staleWhileRevalidate({
+        // Use a custom cache name
+        cacheName: 'css-cache',
+    })
+);
+
+workbox.routing.registerRoute(
+    // Cache CSS files
+    /.+(\/|.html)$/,
+    // Use cache but update in the background ASAP
+    workbox.strategies.staleWhileRevalidate({
+        // Use a custom cache name
+        cacheName: 'html-cache',
+    })
+);
+
+workbox.routing.registerRoute(
+    // Cache image files
+    /.*\.(?:png|jpg|jpeg|svg|gif)/,
+    // Use the cache if it's available
+    workbox.strategies.cacheFirst({
+        // Use a custom cache name
+        cacheName: 'image-cache',
+        plugins: [
+            new workbox.expiration.Plugin({
+                // Cache only 20 images
+                maxEntries: 20,
+                // Cache for a maximum of a week
+                maxAgeSeconds: 7 * 24 * 60 * 60,
+            })
+        ],
+    })
+);
