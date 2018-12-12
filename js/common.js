@@ -15,12 +15,12 @@ const vm = new Vue({
     day_bill: 0.0,
     itemFilter: false,
     isActiveTabNum: '1',
-    nowMonth: 'Sep',
+    nowMonth: 'Dec',
     monthlyBills: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jly', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
   mounted: function(){
-    this.nowMonth = 'Aug';
+    this.nowMonth = 'Dec';
     this.loadTodo();
     this.calTotal();
     this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
