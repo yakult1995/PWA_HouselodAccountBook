@@ -172,6 +172,20 @@ const vm = new Vue({
         if(!this.items){
             this.items = [];
         }
+    },
+    changeUserID: function(userID){
+        console.log("Requested UserID : " + userID);
+        if(userID){
+            var shaObj = new jsSHA("SHA-256", "TEXT");
+            shaObj.update(userID);
+            var hashedUserID = shaObj.getHash("HEX");
+            localStorage.setItem('hashedUserID', hashedUserID);
+            localStorage.setItem('UserID', userID);
+            this.isActiveTabNum = 1;
+            $('#itemResistButton').prop("disabled", false);
+        }else{
+            console.log("UserID Error");
+        }
     }
   }
 })
@@ -194,4 +208,17 @@ $(function() {
       $main.css('margin-top', '0');
     }
   });
+
+  if(!isResisteredUser()){
+      console.log("UserID is empty");
+      $('#itemResistButton').prop("disabled", true);
+      vm.isActiveTabNum = 3;
+  }
 });
+
+// User登録が済んでいるかの確認
+function isResisteredUser(){
+    userID = localStorage.getItem('UserID');
+    console.log("UserID : " + userID);
+    return userID;
+}
