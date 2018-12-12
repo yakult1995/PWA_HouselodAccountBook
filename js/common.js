@@ -25,54 +25,56 @@ const vm = new Vue({
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
   mounted: function(){
-    this.nowMonth = 'Dec';
-    this.loadTodo();
-    this.loadLent();
-    this.calTotal();
-    this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
+      this.nowMonth = 'Dec';
+      this.loadTodo();
+      this.loadLent();
+      this.calTotal();
+      this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
+      this.lentDate = this.myDate && this.myDate.toISOString().split('T')[0];
 
-    // version check
-    this.checkVersion();
+      // version check
+      this.checkVersion();
   },
-  methods: {
-    setDispItem: function(item_name){
-        this.day_bill = 0.0;
-        
-        if(!this.itemFilter){
-            this.items = this.items.filter(function(item){
-                return item.name == item_name;
-            })
-            // アイテムで絞ったときの合計金額計算
-            for(var i = 0; i < this.items.length; i++){
-                this.day_bill += parseFloat(this.items[i].balance);
-            }
-            this.itemFilter = true;
-        }else{
-            this.loadTodo();
-            this.itemFilter = false;
-        }
-    },
-    setMonth: function(month){
-        this.nowMonth = month;
-    },
-    isActiveMonth: function(month){
-        if(month == this.nowMonth){
-            return true;
-        }else{
-            return false;
-        }
-    },
-    isSelectTab: function(tab_num){
+    methods: {
+      setDispItem: function(item_name){
+          this.day_bill = 0.0;
+
+          if(!this.itemFilter){
+              this.items = this.items.filter(function(item){
+                  return item.name == item_name;
+              });
+
+              // アイテムで絞ったときの合計金額計算
+              for(var i = 0; i < this.items.length; i++){
+                  this.day_bill += parseFloat(this.items[i].balance);
+              }
+              this.itemFilter = true;
+          }else{
+              this.loadTodo();
+              this.itemFilter = false;
+          }
+      },
+      setMonth: function(month){
+          this.nowMonth = month;
+      },
+      isActiveMonth: function(month){
+          if(month == this.nowMonth){
+              return true;
+          }else{
+              return false;
+          }
+      },
+      isSelectTab: function(tab_num){
         this.isActiveTabNum = tab_num;
-    },
-    isActiveTab: function(tab_num){
+      },
+      isActiveTab: function(tab_num){
         if(tab_num == this.isActiveTabNum){
             return true;
         }else{
             return false;
         }
-    },
-    setDsipDay:function(date){
+      },
+      setDsipDay:function(date){
         if(this.disp_day == ''){
             this.disp_day = date;
             this.day_bill = 0.0;
@@ -88,7 +90,7 @@ const vm = new Vue({
             this.disp_day = '';
             this.day_bill = 0.0;
         }
-    },
+      },
     isDispMonth: function(month){
         if(this.nowMonth == this.months[parseInt(month) - 1]){
             return true;
@@ -151,6 +153,7 @@ const vm = new Vue({
         this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
         this.newDay = '';
         this.newHow = 'card';
+
         this.saveTodo();
     },
       addLentMoney: function(lentName, lentBalance, lentHow, lentDate){
@@ -166,7 +169,9 @@ const vm = new Vue({
           this.lentName = '';
           this.lentBalance = '';
           this.lentHow = '';
-          this.lentDate = '';
+          this.lentDate = this.myDate && this.myDate.toISOString().split('T')[0];
+
+          this.saveLent();
       },
       deleteTodo: function(ele){
         if(confirm(ele.name + 'を削除しますか？')) {
@@ -184,7 +189,7 @@ const vm = new Vue({
               this.saveLent();
           }
       },
-    saveTodo: function(){
+      saveTodo: function(){
         // sort
         this.items.sort(function(a, b){
             if(a.date < b.date) return 1;
@@ -195,23 +200,23 @@ const vm = new Vue({
         localStorage.setItem('items', JSON.stringify(this.items));
 
         this.calTotal();
-    },
+        },
       saveLent: function(){
-          localStorage.setItem('lents', JSON.stringify(this.lents));
-      },
-    loadTodo: function(){
+        localStorage.setItem('lents', JSON.stringify(this.lents));
+        },
+      loadTodo: function(){
         this.items = JSON.parse( localStorage.getItem('items') );
         if(!this.items){
             this.items = [];
         }
-    },
+        },
       loadLent: function(){
           this.lents = JSON.parse( localStorage.getItem('lents') );
           if(!this.lents){
               this.lents = [];
           }
-      },
-    changeUserID: function(userID){
+          },
+      changeUserID: function(userID){
         console.log("Requested UserID : " + userID);
         if(userID){
             var shaObj = new jsSHA("SHA-256", "TEXT");
@@ -226,32 +231,32 @@ const vm = new Vue({
         }
     }
   }
-})
+});
 
 $(function() {
-  var $win = $(window),
-      $main = $('.tabContent'),
-      $nav = $('#menu'),
-      navHeight = $nav.outerHeight(true),
-      navPos = $nav.offset().top,
-      fixedClass = 'fixed';
+    var $win = $(window),
+        $main = $('.tabContent'),
+        $nav = $('#menu'),
+        navHeight = $nav.outerHeight(true),
+        navPos = $nav.offset().top,
+        fixedClass = 'fixed';
 
-  $win.on('load scroll', function() {
-    var value = $(this).scrollTop();
-    if ( value > navPos ) {
-      $nav.addClass(fixedClass);
-      $main.css('margin-top', navHeight);
-    } else {
-      $nav.removeClass(fixedClass);
-      $main.css('margin-top', '0');
+    $win.on('load scroll', function() {
+        var value = $(this).scrollTop();
+        if ( value > navPos ) {
+            $nav.addClass(fixedClass);
+            $main.css('margin-top', navHeight);
+        } else {
+            $nav.removeClass(fixedClass);
+            $main.css('margin-top', '0');
+        }
+    });
+
+    if(!isResisteredUser()){
+        console.log("UserID is empty");
+        $('#itemResistButton').prop("disabled", true);
+        vm.isActiveTabNum = 4;
     }
-  });
-
-  if(!isResisteredUser()){
-      console.log("UserID is empty");
-      $('#itemResistButton').prop("disabled", true);
-      vm.isActiveTabNum = 4;
-  }
 });
 
 // User登録が済んでいるかの確認
