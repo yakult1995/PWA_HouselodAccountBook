@@ -146,7 +146,8 @@ const vm = new Vue({
             balance: newBalance,
             date: newDate,
             day: this.newDay,
-            how: newHow
+            how: newHow,
+            createdAt : new Date()
         });
         this.newName = '';
         this.newBalance = '';
