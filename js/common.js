@@ -26,8 +26,8 @@ const vm = new Vue({
   },
   mounted: function(){
       this.nowMonth = 'Dec';
-      this.loadTodo();
-      this.loadLent();
+      this.loadItemList('items');
+      this.loadItemList('lents');
       this.calTotal();
       this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
       this.lentDate = this.myDate && this.myDate.toISOString().split('T')[0];
@@ -41,7 +41,7 @@ const vm = new Vue({
 
           if(!this.itemFilter){
               this.items = this.items.filter(function(item){
-                  return item.name == item_name;
+                  return item.name === item_name;
               });
 
               // アイテムで絞ったときの合計金額計算
@@ -50,7 +50,7 @@ const vm = new Vue({
               }
               this.itemFilter = true;
           }else{
-              this.loadTodo();
+              this.loadItemList('items');
               this.itemFilter = false;
           }
       },
@@ -58,7 +58,7 @@ const vm = new Vue({
           this.nowMonth = month;
       },
       isActiveMonth: function(month){
-          if(month == this.nowMonth){
+          if(month === this.nowMonth){
               return true;
           }else{
               return false;
@@ -68,14 +68,14 @@ const vm = new Vue({
         this.isActiveTabNum = tab_num;
       },
       isActiveTab: function(tab_num){
-        if(tab_num == this.isActiveTabNum){
+        if(tab_num === this.isActiveTabNum){
             return true;
         }else{
             return false;
         }
       },
       setDsipDay:function(date){
-        if(this.disp_day == ''){
+        if(this.disp_day === ''){
             this.disp_day = date;
             this.day_bill = 0.0;
             
@@ -92,16 +92,12 @@ const vm = new Vue({
         }
       },
     isDispMonth: function(month){
-        if(this.nowMonth == this.months[parseInt(month) - 1]){
-            return true;
-        }else{
-            return false;
-        }
+        return this.nowMonth === this.months[parseInt(month) - 1];
     },
     isDispDay: function(date){
-        if(this.disp_day == ''){
+        if(this.disp_day === ''){
             return true;
-        }else if(this.disp_day == date){
+        }else if(this.disp_day === date){
             return true;
         }else{
             return false;
@@ -120,7 +116,7 @@ const vm = new Vue({
         if(!this.old_version){
             this.old_version = {'version' : '0'};
         }
-        if($('#current_version').text() != this.old_version['version']){
+        if($('#current_version').text() !== this.old_version['version']){
             alert('version up !');
             localStorage.setItem('version', JSON.stringify({
                 'version' : $('#current_version').text()
@@ -149,13 +145,13 @@ const vm = new Vue({
             how: newHow,
             createdAt : new Date()
         });
+        this.addItemToList(this.items, 'items');
+
         this.newName = '';
         this.newBalance = '';
         this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
         this.newDay = '';
         this.newHow = 'card';
-
-        this.saveTodo();
     },
       addLentMoney: function(lentName, lentBalance, lentHow, lentDate){
           this.lents.push({
@@ -165,58 +161,44 @@ const vm = new Vue({
               how: lentHow,
               createdAt : new Date()
           });
-          localStorage.setItem('lents', JSON.stringify(this.lents));
+          this.addItemToList(this.lents, 'lents');
 
           this.lentName = '';
           this.lentBalance = '';
-          this.lentHow = '';
+          this.lentHow = 'give';
           this.lentDate = this.myDate && this.myDate.toISOString().split('T')[0];
-
-          this.saveLent();
       },
-      deleteTodo: function(ele){
-        if(confirm(ele.name + 'を削除しますか？')) {
-            this.items = this.items.filter(function (item) {
-                return item.name !== ele.name;
-            })
-            this.saveTodo();
-        }
+      addItemToList: function(ItemList, ItemListName){
+          localStorage.setItem(ItemListName, JSON.stringify(ItemList));
+          this.saveItemList(ItemListName, ItemList);
       },
-      deleteLent: function(ele){
+      deleteItemFromList: function(ele, ItemList, ItemListName){
           if(confirm(ele.name + 'を削除しますか？')) {
-              this.lents = this.lents.filter(function (item) {
-                  return item.createdAt !== ele.createdAt
+              ItemList = ItemList.filter(function (item) {
+                  if(item.createdAt === ""){
+                      return item.name !== ele.name;
+                  }else {
+                      return item.createdAt !== ele.createdAt;
+                  }
               });
-              this.saveLent();
+              this.saveItemList(ItemListName, ItemList);
           }
       },
-      saveTodo: function(){
-        // sort
-        this.items.sort(function(a, b){
-            if(a.date < b.date) return 1;
-            if(a.date > b.date) return -1;
-            return 0;
-        });
+      saveItemList: function(ItemListName, ItemList){
+          // Sort
+          this[ItemListName].sort(function(a, b){
+              if(a.createdAt < b.createdAt) return 1;
+              if(a.createdAt > b.createdAt) return -1;
+              return 0;
+          });
 
-        localStorage.setItem('items', JSON.stringify(this.items));
-
-        this.calTotal();
-        },
-      saveLent: function(){
-        localStorage.setItem('lents', JSON.stringify(this.lents));
-        },
-      loadTodo: function(){
-        this.items = JSON.parse( localStorage.getItem('items') );
-        if(!this.items){
-            this.items = [];
-        }
-        },
-      loadLent: function(){
-          this.lents = JSON.parse( localStorage.getItem('lents') );
-          if(!this.lents){
-              this.lents = [];
-          }
-          },
+          localStorage.setItem(ItemListName, JSON.stringify(ItemList));
+          this.loadItemList(ItemListName);
+          this.calTotal();
+      },
+      loadItemList: function(ItemListName){
+          this[ItemListName] = JSON.parse( localStorage.getItem(ItemListName) );
+      },
       changeUserID: function(userID){
         console.log("Requested UserID : " + userID);
         if(userID){
