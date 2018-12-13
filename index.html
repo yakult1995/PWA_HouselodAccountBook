@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v3.2α</span>
+        家計簿 <span id="current_version">v3.2β</span>
     </div>
 
     <hr>
@@ -51,7 +51,7 @@
                                 <td class="item_date" @click="setDsipDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">{{ item.date.split('T')[0].replace('-', '/').split('/')[1] }} {{ item.day }}</td>
                                 <td class="item_name" @click="setDispItem(item.name)">{{ item.name }}</td>
                                 <td class="item_balance">${{ item.balance }}</td>
-                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">✗</button></td>
+                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteItemFromList(item, vm.items, 'items')">✗</button></td>
                             </tr>
                         </table>
 
@@ -85,7 +85,7 @@
                                 <td class="item_date">{{ item.date.split('T')[0].replace('-', '/').split('/')[1] }}</td>
                                 <td class="item_name">{{ item.name }}</td>
                                 <td class="item_balance">${{ item.balance }}</td>
-                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteTodo(item)">✗</button></td>
+                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteItemFromList(item, vm.items, 'items')">✗</button></td>
                             </tr>
                         </table>
                     </div>
@@ -109,7 +109,7 @@
                                 <td v-if="lent.how == 'give'">貸</td>
                                 <td v-if="lent.how == 'take'">借</td>
                                 <td class="item_balance">${{ lent.balance }}</td>
-                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteLent(lent)">✗</button></td>
+                                <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteItemFromList(lent, vm.lents, 'lents')">✗</button></td>
                             </tr>
                         </table>
                     </div>
