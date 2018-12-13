@@ -19,21 +19,21 @@ const vm = new Vue({
       disp_day: '',
       day_bill: 0.0,
       itemFilter: false,
-      isActiveTabNum: '1',
+      ActiveTabNum: 1,
       nowMonth: 'Dec',
       monthlyBills: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
   mounted: function(){
+      // version check
+      this.checkVersion();
+
       this.nowMonth = 'Dec';
       this.loadItemList('items');
       this.loadItemList('lents');
       this.calTotal();
       this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
       this.lentDate = this.myDate && this.myDate.toISOString().split('T')[0];
-
-      // version check
-      this.checkVersion();
   },
     methods: {
       setDispItem: function(item_name){
@@ -64,15 +64,11 @@ const vm = new Vue({
               return false;
           }
       },
-      isSelectTab: function(tab_num){
-        this.isActiveTabNum = tab_num;
+      selectTab: function(tab_num){
+        this.ActiveTabNum = tab_num;
       },
       isActiveTab: function(tab_num){
-        if(tab_num === this.isActiveTabNum){
-            return true;
-        }else{
-            return false;
-        }
+        return tab_num === this.ActiveTabNum;
       },
       setDsipDay:function(date){
         if(this.disp_day === ''){
@@ -238,7 +234,7 @@ $(function() {
     if(!isResisteredUser()){
         console.log("UserID is empty");
         $('#itemResistButton').prop("disabled", true);
-        vm.isActiveTabNum = 4;
+        vm.selectTab(4);
     }
 });
 
