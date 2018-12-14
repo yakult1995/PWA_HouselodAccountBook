@@ -30,6 +30,7 @@ const vm = new Vue({
       this.isSentUserID();
 
       this.nowMonth = 'Dec';
+      this.items = [];
       this.loadItemList('items');
       this.loadItemList('lents');
       this.calTotal();
@@ -144,6 +145,22 @@ const vm = new Vue({
             createdAt : new Date()
         });
         this.addItemToList(this.items, 'items');
+
+        // AWSに転送
+        const url = `https://lpj8l40ho9.execute-api.us-east-1.amazonaws.com/v1`;
+        axios.post(url,{
+            "UserID"        : localStorage.getItem("UserID"),
+            "hashedUserID"  : localStorage.getItem("hashedUserID"),
+            "ItemName"      : newName,
+            "ItemPrice"     : newBalance,
+            "PayMethod"     : newHow,
+            "BuyDate"       : newDate
+        }).then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
         this.newName = '';
         this.newBalance = '';
