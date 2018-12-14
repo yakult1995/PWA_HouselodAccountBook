@@ -202,8 +202,8 @@ const vm = new Vue({
       saveItemList: function(ItemListName, ItemList){
           // Sort
           this[ItemListName].sort(function(a, b){
-              if(a.createdAt < b.createdAt) return 1;
-              if(a.createdAt > b.createdAt) return -1;
+              if(a.date < b.date) return 1;
+              if(a.date > b.date) return -1;
               return 0;
           });
 
