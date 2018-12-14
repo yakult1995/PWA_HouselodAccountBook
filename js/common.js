@@ -152,7 +152,9 @@ const vm = new Vue({
             "UserID"        : localStorage.getItem("UserID"),
             "hashedUserID"  : localStorage.getItem("hashedUserID"),
             "ItemName"      : newName,
-            "ItemPrice"     : newBalance
+            "ItemPrice"     : newBalance,
+            "PayMethod"     : newHow,
+            "BuyDate"       : newDate
         }).then(function (response) {
             console.log(response);
         })
