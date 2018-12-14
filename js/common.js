@@ -205,9 +205,9 @@ const vm = new Vue({
             var hashedUserID = shaObj.getHash("HEX");
             localStorage.setItem('hashedUserID', hashedUserID);
             localStorage.setItem('UserID', userID);
-            this.selectTab(1);
             $('#itemResistButton').prop("disabled", false);
 
+            this.selectTab(1);
             this.isSentUserID();
         }else{
             console.log("UserID Error");
