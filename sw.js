@@ -27,6 +27,16 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     // Cache CSS files
+    /.*\.woff2/,
+    // Use cache but update in the background ASAP
+    workbox.strategies.staleWhileRevalidate({
+        // Use a custom cache name
+        cacheName: 'font-cache',
+    })
+);
+
+workbox.routing.registerRoute(
+    // Cache CSS files
     /.+(\/|.html)$/,
     // Use cache but update in the background ASAP
     workbox.strategies.staleWhileRevalidate({

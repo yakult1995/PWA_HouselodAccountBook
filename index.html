@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v3.2β</span>
+        家計簿 <span id="current_version">v3.3</span>
     </div>
 
     <hr>
@@ -33,16 +33,16 @@
                 </form>
 
                 <nav id="menu">
-                    <li class="btn btn-outline-info" @click="isSelectTab('1')">全件表示</li>
-                    <li class="btn btn-outline-info" @click="isSelectTab('2')">月別表示</li>
-                    <li class="btn btn-outline-info" @click="isSelectTab('3')">賃貸表</li>
-                    <li class="btn btn-outline-info" @click="isSelectTab('4')">設定</li>
+                    <li class="btn btn-outline-info" @click="selectTab(1)">全件表示</li>
+                    <li class="btn btn-outline-info" @click="selectTab(2)">月別表示</li>
+                    <li class="btn btn-outline-info" @click="selectTab(3)">賃貸表</li>
+                    <li class="btn btn-outline-info" @click="selectTab(4)">設定</li>
                 </nav>
             </div>
 
             <div class="tabContent">
                 <transition>
-                    <div v-if="isActiveTab('1')" class="tabs">
+                    <div v-if="isActiveTab(1)" class="tabs">
                         <div class="total_bill" v-if="day_bill == 0.0">合計金額 : ${{ totalBill }}</div>
                         <div class="total_bill" v-else-if="day_bill != 0.0">合計金額 : ${{ day_bill }}</div>
 
@@ -68,7 +68,7 @@
                 </transition>
 
                 <transition>
-                    <div v-if="isActiveTab('2')" class="tabs">
+                    <div v-if="isActiveTab(2)" class="tabs">
                         <div class="container-fluid">
                             <div class="row">
                                 <div v-for="month in months" class="col-2 col-sm-2 col-md-1 month" @click="setMonth(month)" v-bind:class="{activeMonth:isActiveMonth(month)}">{{ month }}</div>
@@ -92,7 +92,7 @@
                 </transition>
 
                 <transition>
-                    <div v-if="isActiveTab('3')" class="tabs">
+                    <div v-if="isActiveTab(3)" class="tabs">
                         <form action="" @submit.prevent="addLentMoney(lentName, lentBalance, lentHow, lentDate)">
                             <input type="text" placeholder="相手" v-model="lentName" required><br>
                             <input type="number" placeholder="金額" step="0.01" v-model="lentBalance" required><br>
@@ -116,7 +116,7 @@
                 </transition>
 
                 <transition>
-                    <div v-if="isActiveTab('4')" class="tabs">
+                    <div v-if="isActiveTab(4)" class="tabs">
                         <form action="" @submit.prevent="changeUserID(userID)">
                             <input type="text" placeholder="ユーザID" v-model="userID" required><br>
                             <input type="submit" value="登録" class="btn btn-primary">
@@ -131,8 +131,9 @@
     <script src="js/popper.1.14.3.min.js"></script>
     <script src="js/bootstrap4.1.3.min.js"></script>
     <script src="js/vue.min.js"></script>
-    <script src="js/common.js"></script>
     <script src="js/sha256.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="js/common.js"></script>
     <script>
         // Check that service workers are registered
         if ('serviceWorker' in navigator) {
