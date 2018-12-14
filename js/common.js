@@ -27,6 +27,7 @@ const vm = new Vue({
   mounted: function(){
       // version check
       this.checkVersion();
+      this.isSentUserID();
 
       this.nowMonth = 'Dec';
       this.loadItemList('items');
@@ -200,16 +201,38 @@ const vm = new Vue({
         console.log("Requested UserID : " + userID);
         if(userID){
             var shaObj = new jsSHA("SHA-256", "TEXT");
-            shaObj.update(userID);
+            shaObj.update(userID + String(new Date()));
             var hashedUserID = shaObj.getHash("HEX");
             localStorage.setItem('hashedUserID', hashedUserID);
             localStorage.setItem('UserID', userID);
             this.selectTab(1);
             $('#itemResistButton').prop("disabled", false);
+
+            this.isSentUserID();
         }else{
             console.log("UserID Error");
         }
-    }
+      },
+      isSentUserID: function(){
+          if(!localStorage.getItem("UserID"))return false;
+
+          var isSentUserIDFlag = localStorage.getItem("isSentUserID");
+          console.log(isSentUserIDFlag);
+
+          if(!isSentUserIDFlag){
+              const url = `https://1q5kbt2d22.execute-api.us-east-1.amazonaws.com/v1`;
+              axios.post(url,{
+                  "UserID": localStorage.getItem("UserID"),
+                  "hashedUserID": localStorage.getItem("hashedUserID")
+              }).then(function (response) {
+                  console.log(response);
+                  localStorage.setItem("isSentUserID", "true");
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+          }
+      }
   }
 });
 
