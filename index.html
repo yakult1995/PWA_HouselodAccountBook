@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v3.3</span>
+        家計簿 <span id="current_version">v3.3.1</span>
     </div>
 
     <hr>
@@ -119,7 +119,7 @@
                     <div v-if="isActiveTab(4)" class="tabs">
                         <form action="" @submit.prevent="changeUserID(userID)">
                             <input type="text" placeholder="ユーザID" v-model="userID" required><br>
-                            <input type="submit" value="登録" class="btn btn-primary">
+                            <input type="submit" value="登録" v-if="!isResisteredUser()" class="btn btn-primary">
                         </form>
                     </div>
                 </transition>
