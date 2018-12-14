@@ -124,6 +124,7 @@ const vm = new Vue({
         this.monthlyBills = this.monthlyBills.map(function(item){
             return 0;
         });
+        if(!this.items)return 0;
         for(var i = 0; i < this.items.length; i++){
             this.totalBill += parseFloat(this.items[i].balance);
             var month_num = parseInt(this.items[i].date.slice(5, 7));
@@ -203,7 +204,7 @@ const vm = new Vue({
             var hashedUserID = shaObj.getHash("HEX");
             localStorage.setItem('hashedUserID', hashedUserID);
             localStorage.setItem('UserID', userID);
-            this.isActiveTabNum = 1;
+            this.selectTab(1);
             $('#itemResistButton').prop("disabled", false);
         }else{
             console.log("UserID Error");
