@@ -12,25 +12,22 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v3.5</span>
+        In-Out-Checker <span id="current_version">v3.6</span>
     </div>
 
     <hr>
 
     <div id="content">
-
-        <div id="particles-js"></div>
-
         <div id="book">
             <div id="content-header">
                 <form action="" @submit.prevent="addTodo(newName, newBalance, newDate, newHow)">
                     <input type="text" id="search-text" placeholder="アイテム" v-model="newName" required><br>
-                    <div v-for="ItemName in filterdItemNames">
+                    <div v-for="ItemName in filteredItemNames">
                         <div class="ItemNameList" @click="inputItemName(ItemName)">{{ ItemName }}</div>
                     </div>
                     <input type="number" placeholder="金額" step="0.01" v-model="newBalance" required><br>
                     <div class="sample">
-                        <input type="radio" id="on"name="how" v-model="newHow" value="card" required>
+                        <input type="radio" id="on" name="how" v-model="newHow" value="card" required>
                         <label for="on" class="switch-on">Card</label>
                         <input type="radio" id="off" name="how" v-model="newHow" value="cash" required>
                         <label for="off" class="switch-off">Cash</label>
@@ -50,8 +47,8 @@
             <div class="tabContent">
                 <transition>
                     <div v-if="isActiveTab(1)" class="tabs">
-                        <div class="total_bill" v-if="day_bill == 0.0">合計金額 : ${{ totalBill }}</div>
-                        <div class="total_bill" v-else-if="day_bill != 0.0">合計金額 : ${{ day_bill }}</div>
+                        <div class="total_bill" v-if="day_bill == 0.0">Total : ${{ totalBill }}</div>
+                        <div class="total_bill" v-else-if="day_bill != 0.0">Total : ${{ day_bill }}</div>
 
                         <table class="table table-borderless">
                             <tr v-for="item in items" v-if="isDispDay(item.date.split('T')[0].replace('-', '/').split('/')[1])">

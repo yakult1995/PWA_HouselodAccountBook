@@ -42,7 +42,7 @@ const vm = new Vue({
       this.loadItemNameList();
   },
     computed:{
-        filterdItemNames: function(){
+        filteredItemNames: function(){
           var ItemName = [];
 
           if(this.newName !== ''){
@@ -317,7 +317,7 @@ $(function() {
 
 // User登録が済んでいるかの確認
 function isResisteredUser(){
-    userID = localStorage.getItem('UserID');
+    let userID = localStorage.getItem('UserID');
     console.log("UserID : " + userID);
     return userID;
 }
