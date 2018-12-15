@@ -175,3 +175,13 @@ div.activeMonth{
 .sample label:last-of-type{
     border-radius: 0 3px 3px 0;
 }
+
+.ItemNameList {
+    margin: 10px auto;
+    text-decoration: underline #a1b91d;
+}
+
+.ItemNameList:after {
+    content: "⇑";
+    color: #a1b91d;
+}
