@@ -3,6 +3,8 @@ const vm = new Vue({
   data: {
       old_version: '',
       items: [],
+      ItemNameList: [],
+      suggestNameList: [],
       lents: [],
       newName: '',
       newBalance: '',
@@ -36,8 +38,38 @@ const vm = new Vue({
       this.calTotal();
       this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
       this.lentDate = this.myDate && this.myDate.toISOString().split('T')[0];
+
+      this.loadItemNameList();
   },
+    computed:{
+        filterdItemNames: function(){
+          var ItemName = [];
+
+          if(this.newName !== ''){
+              for(var i in this.ItemNameList) {
+                  if(this.ItemNameList[i].indexOf(this.newName) !== -1 && this.ItemNameList[i] !== this.newName){
+                      ItemName.push(this.ItemNameList[i]);
+                  }
+              }
+              return ItemName;
+          }else{
+              return false;
+          }
+      }
+    },
     methods: {
+      loadItemNameList: function(){
+          var ItemList = JSON.parse(localStorage.getItem("items"));
+
+          for(var item in ItemList){
+              this.ItemNameList.push(ItemList[item]['name']);
+          }
+
+          // 重複削除
+          this.ItemNameList = this.ItemNameList.filter(function (x, i, self) {
+              return self.indexOf(x) === i;
+          });
+      },
       setDispItem: function(item_name){
           this.day_bill = 0.0;
 
@@ -249,6 +281,10 @@ const vm = new Vue({
                   console.log(error);
               });
           }
+      },
+      inputItemName: function(ItemName){
+          console.log(ItemName);
+          this.newName = ItemName;
       }
   }
 });

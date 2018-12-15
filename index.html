@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        家計簿 <span id="current_version">v3.4.2</span>
+        家計簿 <span id="current_version">v3.5</span>
     </div>
 
     <hr>
@@ -24,7 +24,10 @@
         <div id="book">
             <div id="content-header">
                 <form action="" @submit.prevent="addTodo(newName, newBalance, newDate, newHow)">
-                    <input type="text" placeholder="アイテム" v-model="newName" required><br>
+                    <input type="text" id="search-text" placeholder="アイテム" v-model="newName" required><br>
+                    <div v-for="ItemName in filterdItemNames">
+                        <div class="ItemNameList" @click="inputItemName(ItemName)">{{ ItemName }}</div>
+                    </div>
                     <input type="number" placeholder="金額" step="0.01" v-model="newBalance" required><br>
                     <div class="sample">
                         <input type="radio" id="on"name="how" v-model="newHow" value="card" required>
