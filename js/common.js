@@ -191,18 +191,20 @@ const vm = new Vue({
                 isUploaded: 'true',
                 createdAt : new Date()
             });
+
+            vm.addItemToList(vm.items, 'items');
+
+            vm.newName = '';
+            vm.newBalance = '';
+            vm.newDate = vm.myDate && vm.myDate.toISOString().split('T')[0];
+            vm.newDay = '';
+            vm.newHow = 'card';
         })
         .catch(function (error) {
             console.log(error);
         });
 
-        this.addItemToList(this.items, 'items');
 
-        this.newName = '';
-        this.newBalance = '';
-        this.newDate = this.myDate && this.myDate.toISOString().split('T')[0];
-        this.newDay = '';
-        this.newHow = 'card';
     },
       addLentMoney: function(lentName, lentBalance, lentHow, lentDate){
           this.lents.push({
