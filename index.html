@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        In-Out-Checker <span id="current_version">v3.6</span>
+        In-Out-Checker <span id="current_version">v3.6.1</span>
     </div>
 
     <hr>
@@ -121,8 +121,8 @@
 
                 <transition>
                     <div v-if="isActiveTab(4)" class="tabs">
-                        <form action="" @submit.prevent="changeUserID(userID)">
-                            <input type="text" placeholder="ユーザID" v-model="userID" required><br>
+                        <form action="" @submit.prevent="changeUserID(UserID)">
+                            <input type="text" placeholder="ユーザID" v-model="UserID" required><br>
                             <input type="submit" value="登録" v-if="!isResisteredUser()" class="btn btn-primary">
                         </form>
                     </div>

@@ -347,6 +347,8 @@ $(function() {
         console.log("UserID is empty");
         $('#itemResistButton').prop("disabled", true);
         vm.selectTab(4);
+    }else{
+        vm.UserID = isResisteredUser();
     }
 });
 
