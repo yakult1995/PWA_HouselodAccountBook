@@ -168,7 +168,8 @@ const vm = new Vue({
         this.totalBill = Math.round(this.totalBill * 100) / 100;
     },
     addTodo: function(newName, newBalance, newDate, newHow){
-        this.newDay = this.myDate.toString().split(' ')[0];
+        var BuyDate = new Date(newDate).toUTCString();
+        this.newDay = BuyDate.toString().split(',')[0];
 
         // AWSに転送
         const url = `https://lpj8l40ho9.execute-api.us-east-1.amazonaws.com/v1`;
