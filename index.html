@@ -113,7 +113,7 @@
                     <div v-if="isActiveTab(4)" class="tabs">
                         <form action="" @submit.prevent="changeUserID(UserID)">
                             <input type="text" placeholder="ユーザID" v-model="UserID" required><br>
-                            <input type="submit" value="登録" v-if="!isResisteredUser()" class="btn btn-primary">
+                            <input type="submit" value="登録" v-if="!isSentUserID()" class="btn btn-primary">
                         </form>
 
                         <hr>

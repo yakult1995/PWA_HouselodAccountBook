@@ -1,6 +1,7 @@
 const vm = new Vue({
   el: '#book',
   data: {
+      UserID: '',
       old_version: '',
       items: [],
       ItemNameList: [],
@@ -29,6 +30,7 @@ const vm = new Vue({
   mounted: function(){
       // version check
       this.checkVersion();
+      this.loadUserID();
       this.isSentUserID();
 
       this.nowMonth = 'Dec';
@@ -273,7 +275,6 @@ const vm = new Vue({
           if(!localStorage.getItem("UserID"))return false;
 
           var isSentUserIDFlag = localStorage.getItem("isSentUserID");
-          console.log(isSentUserIDFlag);
 
           if(!isSentUserIDFlag){
               const url = `https://1q5kbt2d22.execute-api.us-east-1.amazonaws.com/v1`;
@@ -283,10 +284,14 @@ const vm = new Vue({
               }).then(function (response) {
                   console.log(response);
                   localStorage.setItem("isSentUserID", "true");
+                  return true;
               })
               .catch(function (error) {
                   console.log(error);
+                  return false;
               });
+          }else{
+              return true;
           }
       },
       inputItemName: function(ItemName){
@@ -295,7 +300,6 @@ const vm = new Vue({
       },
       uploadAllItem: function () {
           var AllItemList = JSON.parse(localStorage.getItem('items'));
-          console.log(AllItemList);
           for(let i in AllItemList){
               // アップロードが終わってなかったら
               if(AllItemList[i]['isUploaded'] !== 'true'){
@@ -311,11 +315,12 @@ const vm = new Vue({
                       "BuyDate"       : AllItemList[i]['date']
                   }).then(function (response) {
                       console.log(response);
+                      // アップロードが成功するればフラグ変更
+                      AllItemList[i]['isUploaded'] = 'true';
                   })
                   .catch(function (error) {
                       console.log(error);
                   });
-                  AllItemList[i]['isUploaded'] = 'true';
               }else{
                   console.log(AllItemList[i]['name'] + "is uploaded.");
               }
@@ -323,6 +328,14 @@ const vm = new Vue({
 
           // 最後にLocalStorageの更新
           this.saveItemList('items', AllItemList);
+      },
+      loadUserID: function(){
+          if(!localStorage.getItem('UserID')){
+              console.log("UserID is empty");
+              this.selectTab(4);
+          }else{
+              this.UserID = localStorage.getItem('UserID');
+          }
       }
   }
 });
@@ -345,19 +358,4 @@ $(function() {
             $main.css('margin-top', '0');
         }
     });
-
-    if(!isResisteredUser()){
-        console.log("UserID is empty");
-        $('#itemResistButton').prop("disabled", true);
-        vm.selectTab(4);
-    }else{
-        vm.UserID = isResisteredUser();
-    }
 });
-
-// User登録が済んでいるかの確認
-function isResisteredUser(){
-    let userID = localStorage.getItem('UserID');
-    console.log("UserID : " + userID);
-    return userID;
-}
