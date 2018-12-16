@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        In-Out-Checker <span id="current_version">v3.6.2</span>
+        In-Out-Checker <span id="current_version">v3.7</span>
     </div>
 
     <hr>
@@ -58,16 +58,6 @@
                                 <td class="item_delete"><button class="btn btn-outline-danger" v-on:click="deleteItemFromList(item, vm.items, 'items')">✗</button></td>
                             </tr>
                         </table>
-
-                        <hr>
-
-                        <div id="import">
-                            データインポート  
-                            <form action="" @submit.prevent="importData(importedData)">
-                                <textarea v-model="importedData" :rows="10" placeholder="exportしたデータを貼り付けてください" required></textarea>
-                                <input type="submit" value="読み込み" class="btn btn-primary">
-                            </form>
-                        </div>
                     </div>
                 </transition>
 
@@ -123,8 +113,18 @@
                     <div v-if="isActiveTab(4)" class="tabs">
                         <form action="" @submit.prevent="changeUserID(UserID)">
                             <input type="text" placeholder="ユーザID" v-model="UserID" required><br>
-                            <input type="submit" value="登録" v-if="!isResisteredUser()" class="btn btn-primary">
+                            <input type="submit" value="登録" v-if="!isSentUserID()" class="btn btn-primary">
                         </form>
+
+                        <hr>
+
+                        <div id="import">
+                            データインポート
+                            <form action="" @submit.prevent="importData(importedData)">
+                                <textarea v-model="importedData" :rows="10" placeholder="exportしたデータを貼り付けてください" required></textarea>
+                                <input type="submit" value="読み込み" class="btn btn-primary">
+                            </form>
+                        </div>
                     </div>
                 </transition>
             </div>
