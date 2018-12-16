@@ -40,9 +40,10 @@ const vm = new Vue({
       this.lentDate = this.myDate && this.myDate.toISOString().split('T')[0];
 
       this.loadItemNameList();
+      this.uploadAllItem();
   },
     computed:{
-        filterdItemNames: function(){
+        filteredItemNames: function(){
           var ItemName = [];
 
           if(this.newName !== ''){
@@ -168,15 +169,6 @@ const vm = new Vue({
     },
     addTodo: function(newName, newBalance, newDate, newHow){
         this.newDay = this.myDate.toString().split(' ')[0];
-        this.items.push({
-            name: newName,
-            balance: newBalance,
-            date: newDate,
-            day: this.newDay,
-            how: newHow,
-            createdAt : new Date()
-        });
-        this.addItemToList(this.items, 'items');
 
         // AWSに転送
         const url = `https://lpj8l40ho9.execute-api.us-east-1.amazonaws.com/v1`;
@@ -189,10 +181,22 @@ const vm = new Vue({
             "BuyDate"       : newDate
         }).then(function (response) {
             console.log(response);
+            console.log(vm.items);
+            vm.items.push({
+                name: newName,
+                balance: newBalance,
+                date: newDate,
+                day: vm.newDay,
+                how: newHow,
+                isUploaded: 'true',
+                createdAt : new Date()
+            });
         })
         .catch(function (error) {
             console.log(error);
         });
+
+        this.addItemToList(this.items, 'items');
 
         this.newName = '';
         this.newBalance = '';
@@ -285,6 +289,37 @@ const vm = new Vue({
       inputItemName: function(ItemName){
           console.log(ItemName);
           this.newName = ItemName;
+      },
+      uploadAllItem: function () {
+          var AllItemList = JSON.parse(localStorage.getItem('items'));
+          console.log(AllItemList);
+          for(let i in AllItemList){
+              // アップロードが終わってなかったら
+              if(AllItemList[i]['isUploaded'] !== 'true'){
+                  console.log(AllItemList[i]['name'] + "is not uploaded yet.");
+                  // AWSに転送
+                  const url = `https://lpj8l40ho9.execute-api.us-east-1.amazonaws.com/v1`;
+                  axios.post(url,{
+                      "UserID"        : localStorage.getItem("UserID"),
+                      "hashedUserID"  : localStorage.getItem("hashedUserID"),
+                      "ItemName"      : AllItemList[i]['name'],
+                      "ItemPrice"     : AllItemList[i]['balance'],
+                      "PayMethod"     : AllItemList[i]['how'],
+                      "BuyDate"       : AllItemList[i]['date']
+                  }).then(function (response) {
+                      console.log(response);
+                  })
+                  .catch(function (error) {
+                      console.log(error);
+                  });
+                  AllItemList[i]['isUploaded'] = 'true';
+              }else{
+                  console.log(AllItemList[i]['name'] + "is uploaded.");
+              }
+          }
+
+          // 最後にLocalStorageの更新
+          this.saveItemList('items', AllItemList);
       }
   }
 });
@@ -317,7 +352,7 @@ $(function() {
 
 // User登録が済んでいるかの確認
 function isResisteredUser(){
-    userID = localStorage.getItem('UserID');
+    let userID = localStorage.getItem('UserID');
     console.log("UserID : " + userID);
     return userID;
 }
