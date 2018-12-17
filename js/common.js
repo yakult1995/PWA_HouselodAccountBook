@@ -209,6 +209,7 @@ const vm = new Vue({
 
     },
       addLentMoney: function(lentName, lentBalance, lentHow, lentDate){
+          if(!this.lents)this.lents = [];
           this.lents.push({
               name: lentName,
               balance: lentBalance,
