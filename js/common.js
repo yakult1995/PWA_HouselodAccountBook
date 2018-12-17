@@ -150,10 +150,8 @@ const vm = new Vue({
             this.old_version = {'version' : '0'};
         }
         if($('#current_version').text() !== this.old_version['version']){
-            alert('version up !');
-            localStorage.setItem('version', JSON.stringify({
-                'version' : $('#current_version').text()
-            }));
+            alert('updated');
+            localStorage.setItem('version', JSON.stringify({'version' : $('#current_version').text()}));
         }
     },
     calTotal: function(){
@@ -185,6 +183,7 @@ const vm = new Vue({
         }).then(function (response) {
             console.log(response);
             console.log(vm.items);
+            if(!vm.items)vm.items = [];
             vm.items.push({
                 name: newName,
                 balance: newBalance,
@@ -261,7 +260,7 @@ const vm = new Vue({
             var shaObj = new jsSHA("SHA-256", "TEXT");
             shaObj.update(userID + String(new Date()));
             var hashedUserID = shaObj.getHash("HEX");
-            localStorage.setItem('hashedUserID', hashedUserID);
+            localStorage.setItem('hashedUserID', hashedUserID.toString());
             localStorage.setItem('UserID', userID);
             $('#itemResistButton').prop("disabled", false);
 
