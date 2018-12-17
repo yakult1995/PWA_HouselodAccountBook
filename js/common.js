@@ -16,7 +16,7 @@ const vm = new Vue({
       myDate: new Date(),
       lentName: '',
       lentBalance: '',
-      lentHow: '',
+      lentHow: 'give',
       lentDate: new Date(),
       importedData: '',
       disp_day: '',
@@ -209,6 +209,7 @@ const vm = new Vue({
 
     },
       addLentMoney: function(lentName, lentBalance, lentHow, lentDate){
+          if(!this.lents)this.lents = [];
           this.lents.push({
               name: lentName,
               balance: lentBalance,
