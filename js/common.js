@@ -16,7 +16,7 @@ const vm = new Vue({
       myDate: new Date(),
       lentName: '',
       lentBalance: '',
-      lentHow: '',
+      lentHow: 'give',
       lentDate: new Date(),
       importedData: '',
       disp_day: '',
