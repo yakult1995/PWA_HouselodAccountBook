@@ -104,7 +104,11 @@ const vm = new Vue({
                   vm.Assets = null;
               }else{
                   console.log(response['data']);
-                  vm.Assets = parseFloat(response['data']['Assets']);
+                  if(response['data']['Assets']) {
+                      vm.Assets = parseFloat(response['data']['Assets']);
+                  }else{
+                      vm.Assets = 0.0;
+                  }
               }
           })
           .catch(function (error) {
