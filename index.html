@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        In-Out-Checker <span id="current_version">v3.8</span>
+        In-Out-Checker <span id="current_version">v4.0</span>
     </div>
 
     <hr>
@@ -37,10 +37,11 @@
                 </form>
 
                 <nav id="menu">
-                    <li class="btn btn-outline-info" @click="selectTab(1)">全件表示</li>
-                    <li class="btn btn-outline-info" @click="selectTab(2)">月別表示</li>
-                    <li class="btn btn-outline-info" @click="selectTab(3)">賃貸表</li>
-                    <li class="btn btn-outline-info" @click="selectTab(4)">設定</li>
+                    <li class="btn btn-outline-info" @click="selectTab(1)">全件</li>
+                    <li class="btn btn-outline-info" @click="selectTab(2)">月別</li>
+                    <li class="btn btn-outline-info" @click="selectTab(3)">賃貸</li>
+                    <li class="btn btn-outline-info" @click="selectTab(4)">ガチャ</li>
+                    <li class="btn btn-outline-info" @click="selectTab(0)">設定</li>
                 </nav>
             </div>
 
@@ -115,6 +116,14 @@
 
                 <transition>
                     <div v-if="isActiveTab(4)" class="tabs">
+                        <div>
+                            所持B : {{ Assets }}B
+                        </div>
+                    </div>
+                </transition>
+
+                <transition>
+                    <div v-if="isActiveTab(0)" class="tabs">
                         <form action="" @submit.prevent="changeUserID(UserID)">
                             <input type="text" placeholder="ユーザID" v-model="UserID" required><br>
                             <input type="submit" value="登録" v-if="!isSentUserID()" class="btn btn-primary">
