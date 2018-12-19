@@ -24,7 +24,7 @@ const vm = new Vue({
       itemFilter: false,
       ActiveTabNum: 1,
       nowMonth: 'Dec',
-      Assets: 0,
+      Assets: 0.0,
       monthlyBills: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
@@ -46,7 +46,7 @@ const vm = new Vue({
       this.uploadAllItem();
 
       // ガチャ関連
-      this.loadTotalPrice();
+      this.fetchAssets();
   },
     computed:{
         filteredItemNames: function(){
@@ -65,17 +65,52 @@ const vm = new Vue({
       }
     },
     methods: {
-      loadTotalPrice: function(){
-          if(!localStorage.getItem("Assets")){
-              for(var i in this.items){
-                  this.Assets += parseFloat(this.items[i]['balance']);
-              }
+      doGatcha: function(){
+          if(this.Assets < 10){
+              console.log("Assetsが足りません");
           }else{
-              this.Assets = parseFloat(localStorage.getItem("Assets"));
+              console.log("ガチャ出来るよ！");
+              this.updateAssets();
           }
+      },
+      updateAssets: function(){
+          // this.Assets -= 10;
+          // return true;
 
-          console.log("Total Assets : " + this.Assets);
-          localStorage.setItem("Assets", this.Assets.toString());
+          // AWSに転送
+          const url = `https://yh9hz6ar99.execute-api.us-east-1.amazonaws.com/v1`;
+          axios.post(url,{
+              "hashedUserID"  : localStorage.getItem("hashedUserID")
+          }).then(function (response) {
+              console.log(response);
+              vm.fetchAssets();
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+      },
+      fetchAssets: function(){
+          // this.Assets = 9999;
+          // return true;
+
+          const url = `https://yh9hz6ar99.execute-api.us-east-1.amazonaws.com/v1`;
+          axios.get(url,{
+              'params': {
+                  'hashedUserID': localStorage.getItem('hashedUserID')
+              }
+          }).then(function (response) {
+              if(!response['data']){
+                  console.log("Assetsを取得出来ませんでした");
+                  vm.Assets = null;
+              }else{
+                  console.log(response['data']);
+                  vm.Assets = parseFloat(response['data']['Assets']);
+              }
+          })
+          .catch(function (error) {
+              console.log(error);
+              vm.Assets = null;
+          });
       },
       loadItemNameList: function(){
           var ItemList = JSON.parse(localStorage.getItem("items"));
@@ -221,8 +256,6 @@ const vm = new Vue({
         .catch(function (error) {
             console.log(error);
         });
-
-
     },
       addLentMoney: function(lentName, lentBalance, lentHow, lentDate){
           if(!this.lents)this.lents = [];
