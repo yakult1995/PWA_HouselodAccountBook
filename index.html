@@ -12,7 +12,7 @@
 
 <body>
     <div id="header">
-        In-Out-Checker <span id="current_version">v4.0</span>
+        In-Out-Checker <span id="current_version">v4.0.1</span>
     </div>
 
     <hr>
@@ -118,6 +118,13 @@
                     <div v-if="isActiveTab(4)" class="tabs">
                         <div>
                             所持B : {{ Assets }}B
+                        </div>
+
+                        <div v-if="Assets >= 10">
+                            <button class="btn btn-outline-success" @click="doGatcha()">ガチャる！</button>
+                        </div>
+                        <div v-else-if="Assets < 10">
+                            まだ足りないよ！
                         </div>
                     </div>
                 </transition>
