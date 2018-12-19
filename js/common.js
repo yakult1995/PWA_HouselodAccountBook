@@ -24,6 +24,7 @@ const vm = new Vue({
       itemFilter: false,
       ActiveTabNum: 1,
       nowMonth: 'Dec',
+      Assets: 0,
       monthlyBills: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
@@ -43,6 +44,9 @@ const vm = new Vue({
 
       this.loadItemNameList();
       this.uploadAllItem();
+
+      // ガチャ関連
+      this.loadTotalPrice();
   },
     computed:{
         filteredItemNames: function(){
@@ -61,6 +65,18 @@ const vm = new Vue({
       }
     },
     methods: {
+      loadTotalPrice: function(){
+          if(!localStorage.getItem("Assets")){
+              for(var i in this.items){
+                  this.Assets += parseFloat(this.items[i]['balance']);
+              }
+          }else{
+              this.Assets = parseFloat(localStorage.getItem("Assets"));
+          }
+
+          console.log("Total Assets : " + this.Assets);
+          localStorage.setItem("Assets", this.Assets.toString());
+      },
       loadItemNameList: function(){
           var ItemList = JSON.parse(localStorage.getItem("items"));
 
@@ -332,7 +348,7 @@ const vm = new Vue({
       loadUserID: function(){
           if(!localStorage.getItem('UserID')){
               console.log("UserID is empty");
-              this.selectTab(4);
+              this.selectTab(0);
           }else{
               this.UserID = localStorage.getItem('UserID');
           }
