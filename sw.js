@@ -1,59 +1,80 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.1/workbox-sw.js');
 
-workbox.core.setLogLevel(workbox.core.LOG_LEVELS.debug);
-
 if (workbox) {
     console.log(`Yay! Workbox is loaded 🎉`);
 } else {
     console.log(`Boo! Workbox didn't load 😬`);
 }
 
+// Debugを有効に
+workbox.setConfig({
+  debug: true
+});
+
+// cache name設定
+workbox.core.setCacheNameDetails({
+  prefix    : 'In-Out-Checker',
+  suffix    : 'v1',
+  Precache  : 'precache',
+  runtime   : 'runtime'
+});
+
+// Precache list
+workbox.precaching.precacheAndRoute(
+    [
+        'css/bootstrap4.1.3.min.css',
+        {
+            url: 'css/style.css',
+            revision: '4200'
+        },
+        'js/sha256.js',
+        'js/jquery-3.3.1.min.js',
+        'js/axios.js',
+        'js/popper.1.14.3.min.js',
+        'js/vue.min.js',
+        'js/bootstrap4.1.3.min.js',
+        {
+            url: 'js/common.js',
+            revision: '4200'
+        },
+        {
+            url: '/index.html',
+            revision: '4200',
+        }
+    ],
+    {
+        // "/"と"/index.html"を区別しない
+        directoryIndex: null,
+    });
+
+workbox.routing.registerNavigationRoute('/index.html');
+
 workbox.routing.registerRoute(
     new RegExp('.*\.js'),
     // workbox.strategies.networkFirst()
-    workbox.strategies.cacheFirst({
-        // Use a custom cache name
-        cacheName: 'js-cache',
-    })
+    workbox.strategies.cacheFirst()
 );
 
 workbox.routing.registerRoute(
-    // Cache CSS files
-    /.*\.css/,
-    // Use cache but update in the background ASAP
-    workbox.strategies.cacheFirst({
-        // Use a custom cache name
-        cacheName: 'css-cache',
-    })
+    new RegExp('/.*\.css/'),
+    workbox.strategies.cacheFirst()
 );
 
 workbox.routing.registerRoute(
-    // Cache CSS files
-    /.*\.woff2/,
-    // Use cache but update in the background ASAP
-    workbox.strategies.cacheFirst({
-        // Use a custom cache name
-        cacheName: 'font-cache',
-    })
+    new RegExp('/.*\.woff2/'),
+    workbox.strategies.cacheFirst()
 );
 
 workbox.routing.registerRoute(
-    // Cache CSS files
-    /.+(\/|.html)$/,
-    // Use cache but update in the background ASAP
-    workbox.strategies.networkFirst({
-        // Use a custom cache name
-        cacheName: 'html-cache',
-    })
+    new RegExp('/.+(\/|.html)$/'),
+    workbox.strategies.networkFirst()
 );
 
 workbox.routing.registerRoute(
     // Cache image files
-    /.*\.(?:png|jpg|jpeg|svg|gif)/,
+    new RegExp('/.*\.(?:png|jpg|jpeg|svg|gif)/'),
     // Use the cache if it's available
     workbox.strategies.cacheFirst({
-        // Use a custom cache name
-        cacheName: 'image-cache',
         plugins: [
             new workbox.expiration.Plugin({
                 // Cache only 20 images
